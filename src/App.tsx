@@ -6,7 +6,7 @@ import {
 } from 'lucide-react';
 
 // --- إعدادات Gemini API ---
-const apiKey = import.meta.env.VITE_GEMINI_API_KEY || ""; 
+const apiKey = "AIzaSyCKKOpHOYnfBvzk7O9hqOJxCmB1b8R2JrU"; 
 
 const fetchGeminiWithRetry = async (prompt: string, systemInstruction: string = "") => {
   const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
