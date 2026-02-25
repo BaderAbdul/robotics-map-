@@ -9,12 +9,12 @@ import {
 const apiKey = import.meta.env.VITE_GEMINI_API_KEY || ""; 
 
 const fetchGeminiWithRetry = async (prompt: string, systemInstruction: string = "") => {
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
-  
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`;
+
   const payload = {
     contents: [{ parts: [{ text: prompt }] }],
     systemInstruction: systemInstruction ? { parts: [{ text: systemInstruction }] } : undefined
-  };
+  }; // <--- هذا هو القوس الذي كان مفقوداً لإغلاق الدائرة
 
   try {
     const response = await fetch(url, {
@@ -32,7 +32,6 @@ const fetchGeminiWithRetry = async (prompt: string, systemInstruction: string = 
     const data = await response.json();
     return data.candidates?.[0]?.content?.parts?.[0]?.text || "عذراً، لم أتمكن من صياغة إجابة.";
   } catch (error: any) {
-    // إذا كان الخطأ من الشبكة أو المتصفح نفسه
     return `[عطل في الشبكة أو المتصفح]: ${error.message}`;
   }
 };
