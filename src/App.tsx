@@ -3,8 +3,7 @@ import { useState, useRef, useEffect } from 'react';
 import type { FormEvent } from 'react';
 import { 
   Bot, Cpu, Code, Zap, Eye, Server, Map, X, ExternalLink, 
-  PlayCircle, BookOpen, Wrench, MessageSquare, Send, Sparkles, Loader2,
-  Signal, ShieldAlert, CheckCircle2
+  PlayCircle, BookOpen, Wrench, MessageSquare, Send, Sparkles, Loader2 
 } from 'lucide-react';
 
 // --- إعدادات Gemini API ---
