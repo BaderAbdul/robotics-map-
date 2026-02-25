@@ -1,4 +1,3 @@
-
 import { useState, useRef, useEffect } from 'react';
 import type { FormEvent } from 'react';
 import { 
@@ -158,7 +157,7 @@ const roadmapData: Stage[] = [
     description: 'إعطاء الروبوت القدرة على الرؤية واتخاذ القرارات المعقدة باستخدام مكتبات مثل OpenCV ونماذج تعلم الآلة.',
     resources: [
       { type: 'video', title: 'أساسيات Computer Vision', url: '#' },
-      { type: 'video', title: 'الأذرع الروبوتية في المصانع الذكية (محتوى GDG_QU)', url: '#' }
+      { type: 'video', title: 'الأذرع الروبوتية في المصانع الذكية (محتوى GDG Qassim)', url: '#' }
     ],
     project: 'برمجة كاميرا للتعرف على الوجوه أو تتبع كرة ملونة وتوجيه الكاميرا نحوها.'
   }
@@ -170,7 +169,7 @@ export default function App() {
   const [isGeneratingProject, setIsGeneratingProject] = useState<boolean>(false);
   const [isChatOpen, setIsChatOpen] = useState<boolean>(false);
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([
-    { role: 'ai', text: 'مرحباً بك في مجتمع GDG_QU! أنا المساعد "روبو" 🤖. كيف يمكنني مساعدتك في مجال الروبوتات والإلكترونيات اليوم؟' }
+    { role: 'ai', text: 'مرحباً بك في مجتمع GDG Qassim! أنا المساعد "روبو" 🤖. كيف يمكنني مساعدتك في مجال الروبوتات والإلكترونيات اليوم؟' }
   ]);
   const [chatInput, setChatInput] = useState<string>("");
   const [isTyping, setIsTyping] = useState<boolean>(false);
@@ -210,7 +209,7 @@ export default function App() {
     setIsTyping(true);
 
     const systemPrompt = `أنت مساعد ذكي خبير في الروبوتات والإلكترونيات، واسمك "روبو". 
-    أنت جزء من قسم الروبوتات في مجتمع مطوري جوجل بجامعة القصيم (GDG_QU). 
+    أنت جزء من قسم الروبوتات في مجتمع مطوري جوجل بجامعة القصيم (GDG Qassim). 
     مهمتك مساعدة الطلاب في تعلم الروبوتات، الأردوينو، الإلكترونيات، والذكاء الاصطناعي. 
     أجب بإيجاز (لا تتجاوز 4 أسطر)، وبطريقة ودية ومحفزة باللغة العربية.`;
 
@@ -221,7 +220,6 @@ export default function App() {
   };
 
   return (
-    // الخلفية أصبحت تحتوي على Grid Pattern هندسية
     <div dir="rtl" className="min-h-screen bg-slate-950 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:24px_24px] text-slate-200 font-sans selection:bg-blue-500/30 flex flex-col">
       
       {/* --- Header Section --- */}
@@ -238,7 +236,7 @@ export default function App() {
             خارطة طريق الروبوتات
           </h1>
           <p className="text-lg text-slate-400 max-w-2xl mx-auto mb-6 leading-relaxed">
-            دليلك الشامل من الصفر وحتى احتراف بناء وبرمجة الروبوتات الذكية. مقدم لكم من قسم الروبوتات في مجتمع مطوري جوجل <span className="font-semibold text-white px-2 py-0.5 bg-slate-800 rounded-md border border-slate-700">GDG_QU</span>.
+            دليلك الشامل من الصفر وحتى احتراف بناء وبرمجة الروبوتات الذكية. مقدم لكم من قسم الروبوتات في مجتمع مطوري جوجل <span className="font-semibold text-white px-2 py-0.5 bg-slate-800 rounded-md border border-slate-700">GDG Qassim</span>.
           </p>
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-slate-800/80 backdrop-blur-md rounded-full border border-slate-700 text-sm text-slate-300 shadow-lg">
             <Map className="w-4 h-4 text-yellow-400" />
@@ -270,7 +268,6 @@ export default function App() {
                         <div className={`inline-flex p-3 rounded-xl ${stage.bgColor} ${stage.color}`}>
                           <Icon className="w-6 h-6" />
                         </div>
-                        {/* تاق الصعوبة */}
                         <span className={`text-[10px] font-bold px-2.5 py-1 rounded-full border ${stage.difficultyColor}`}>
                           {stage.difficulty}
                         </span>
@@ -297,22 +294,43 @@ export default function App() {
         </div>
       </main>
 
-      {/* --- Footer (التوقيع الهندسي) --- */}
-      <footer className="mt-auto border-t border-slate-800/80 bg-slate-900/50 backdrop-blur-md py-8">
+            {/* --- Footer --- */}
+            <footer className="mt-auto border-t border-slate-800/80 bg-slate-900/50 backdrop-blur-md py-8">
         <div className="container mx-auto px-4 text-center">
-          <div className="inline-flex items-center justify-center gap-2 mb-4">
+          <div className="inline-flex items-center justify-center gap-2 mb-5">
             <span className="w-8 h-px bg-slate-700"></span>
             <Code className="w-4 h-4 text-slate-500" />
             <span className="w-8 h-px bg-slate-700"></span>
           </div>
-          <p className="text-slate-400 text-sm mb-2">
-            تم التطوير بشغف بواسطة <span className="text-blue-400 font-bold tracking-wide">م. بادر</span> ⚡
-          </p>
+
+          {/* الحقوق مقسمة باحترافية */}
+          <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-6 mb-4">
+            <p className="text-slate-300 text-sm">
+              برمجة وتطوير الموقع: <span className="text-blue-400 font-bold tracking-wide">بدر الدخيل الله</span> ⚡
+            </p>
+            <span className="hidden md:block w-1.5 h-1.5 rounded-full bg-slate-700"></span>
+            <p className="text-slate-300 text-sm">
+              إعداد المسار والمحتوى: <span className="text-teal-400 font-bold tracking-wide">فريق الروبوتات</span> 🤖
+            </p>
+          </div>
+
+          {/* لوحة شرف مصغرة بأسماء الفريق */}
+          <div className="text-slate-400 text-[11px] leading-relaxed max-w-2xl mx-auto bg-slate-800/30 p-3 rounded-xl border border-slate-700/50 mb-6">
+            <p className="mb-1">
+              <span className="font-semibold text-slate-300">قائدة القسم:</span> رغد العبيد &nbsp;|&nbsp; 
+              <span className="font-semibold text-slate-300"> النائب:</span> كيان القفاري
+            </p>
+            <p>
+              <span className="font-semibold text-slate-300">أعضاء القسم:</span> رهف الحربي، شاهر الحربي، منار النقيدان، مها المطرفي، بدر الدخيل الله
+            </p>
+          </div>
+
           <p className="text-slate-500 text-xs font-medium">
-            قسم الروبوتات - مجتمع مطوري جوجل جامعة القصيم (GDG_QU) &copy; 2026
+            مجتمع مطوري جوجل جامعة القصيم (GDG Qassim) &copy; 2026
           </p>
         </div>
       </footer>
+
 
       {/* --- Modal / Popup Details --- */}
       {selectedStage && (
@@ -352,7 +370,6 @@ export default function App() {
                 <p className="text-slate-300 leading-relaxed bg-slate-800/50 p-4 rounded-xl border border-slate-700/50">
                   {selectedStage.description}
                 </p>
-                {/* التلميح (Hint) للربط بالواقع */}
                 {selectedStage.hint && (
                   <div className="mt-3 p-3 bg-blue-900/20 border border-blue-500/20 rounded-lg text-blue-300 text-sm font-medium flex items-start gap-2">
                      <span className="block mt-0.5">{selectedStage.hint}</span>
@@ -501,7 +518,6 @@ export default function App() {
             isChatOpen ? 'bg-slate-700 hover:bg-slate-600' : 'bg-blue-600 hover:bg-blue-500 shadow-blue-600/40'
           }`}
         >
-          {/* تأثير النبض (Pulse) عندما يكون الشات مغلقاً ليلفت الانتباه */}
           {!isChatOpen && (
             <span className="absolute inset-0 rounded-full animate-ping bg-blue-400 opacity-30"></span>
           )}
@@ -512,4 +528,3 @@ export default function App() {
     </div>
   );
 }
-
