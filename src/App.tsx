@@ -10,35 +10,33 @@ const apiKey = "AIzaSyCKKOpHOYnfBvzk7O9hqOJxCmB1b8R2JrU";
 
 const fetchGeminiWithRetry = async (prompt: string, systemInstruction: string = "") => {
   const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
-
+  
   const payload = {
     contents: [{ parts: [{ text: prompt }] }],
     systemInstruction: systemInstruction ? { parts: [{ text: systemInstruction }] } : undefined
   };
 
-  let retries = 5;
-  let delay = 1000;
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
 
-  while (retries > 0) {
-    try {
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
-
-      if (!response.ok) throw new Error('API Error');
-      
-      const data = await response.json();
-      return data.candidates?.[0]?.content?.parts?.[0]?.text || "عذراً، لم أتمكن من صياغة إجابة.";
-    } catch (error) {
-      retries--;
-      if (retries === 0) return "حدث خطأ في الاتصال بالذكاء الاصطناعي. يرجى المحاولة لاحقاً.";
-      await new Promise(resolve => setTimeout(resolve, delay));
-      delay *= 2; 
+    // إذا رفضت جوجل الطلب، اقرأ سبب الرفض بدقة
+    if (!response.ok) {
+      const errorData = await response.json();
+      return `[تفاصيل العطل من جوجل]: ${errorData.error?.message || "خطأ غير معروف في السيرفر"}`;
     }
+    
+    const data = await response.json();
+    return data.candidates?.[0]?.content?.parts?.[0]?.text || "عذراً، لم أتمكن من صياغة إجابة.";
+  } catch (error: any) {
+    // إذا كان الخطأ من الشبكة أو المتصفح نفسه
+    return `[عطل في الشبكة أو المتصفح]: ${error.message}`;
   }
 };
+
 
 // --- تعريف الأنواع (TypeScript Types) ---
 interface Resource {
