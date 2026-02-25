@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, FormEvent } from 'react';
+import { useState, useRef, useEffect, type FormEvent } from 'react';
 import { 
   Bot, Cpu, Code, Zap, Eye, Server, Map, X, ExternalLink, 
   PlayCircle, BookOpen, Wrench, MessageSquare, Send, Sparkles, Loader2 
