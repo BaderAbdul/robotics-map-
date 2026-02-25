@@ -9,7 +9,7 @@ import {
 const apiKey = import.meta.env.VITE_GEMINI_API_KEY || ""; 
 
 const fetchGeminiWithRetry = async (prompt: string, systemInstruction: string = "") => {
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`;
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
 
   const payload = {
     contents: [{ parts: [{ text: prompt }] }],
