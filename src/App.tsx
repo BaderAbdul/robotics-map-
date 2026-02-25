@@ -1,13 +1,13 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, FormEvent } from 'react';
 import { 
   Bot, Cpu, Code, Zap, Eye, Server, Map, X, ExternalLink, 
   PlayCircle, BookOpen, Wrench, MessageSquare, Send, Sparkles, Loader2 
 } from 'lucide-react';
 
 // --- إعدادات Gemini API ---
-const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
-// دالة الاتصال مع Gemini مع خاصية إعادة المحاولة (Exponential Backoff)
-const fetchGeminiWithRetry = async (prompt, systemInstruction = "") => {
+const apiKey = import.meta.env.VITE_GEMINI_API_KEY || ""; 
+
+const fetchGeminiWithRetry = async (prompt: string, systemInstruction: string = "") => {
   const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
   
   const payload = {
@@ -34,13 +34,37 @@ const fetchGeminiWithRetry = async (prompt, systemInstruction = "") => {
       retries--;
       if (retries === 0) return "حدث خطأ في الاتصال بالذكاء الاصطناعي. يرجى المحاولة لاحقاً.";
       await new Promise(resolve => setTimeout(resolve, delay));
-      delay *= 2; // مضاعفة وقت الانتظار
+      delay *= 2; 
     }
   }
 };
 
+// --- تعريف الأنواع (TypeScript Types) ---
+interface Resource {
+  type: string;
+  title: string;
+  url: string;
+}
+
+interface Stage {
+  id: number;
+  title: string;
+  icon: any;
+  color: string;
+  bgColor: string;
+  borderColor: string;
+  description: string;
+  resources: Resource[];
+  project: string;
+}
+
+interface ChatMessage {
+  role: 'user' | 'ai';
+  text: string;
+}
+
 // --- بيانات خارطة الطريق ---
-const roadmapData = [
+const roadmapData: Stage[] = [
   {
     id: 1,
     title: 'أساسيات الإلكترونيات',
@@ -128,34 +152,28 @@ const roadmapData = [
 ];
 
 export default function App() {
-  // حالات خارطة الطريق
-  const [selectedStage, setSelectedStage] = useState(null);
+  const [selectedStage, setSelectedStage] = useState<Stage | null>(null);
   
-  // حالات مولد المشاريع (الذكاء الاصطناعي)
-  const [aiProjectIdea, setAiProjectIdea] = useState("");
-  const [isGeneratingProject, setIsGeneratingProject] = useState(false);
+  const [aiProjectIdea, setAiProjectIdea] = useState<string>("");
+  const [isGeneratingProject, setIsGeneratingProject] = useState<boolean>(false);
 
-  // حالات المساعد الذكي (الدردشة)
-  const [isChatOpen, setIsChatOpen] = useState(false);
-  const [chatMessages, setChatMessages] = useState([
+  const [isChatOpen, setIsChatOpen] = useState<boolean>(false);
+  const [chatMessages, setChatMessages] = useState<ChatMessage[]>([
     { role: 'ai', text: 'مرحباً بك في مجتمع GDG_QU! أنا المساعد "روبو" 🤖. كيف يمكنني مساعدتك في مجال الروبوتات اليوم؟' }
   ]);
-  const [chatInput, setChatInput] = useState("");
-  const [isTyping, setIsTyping] = useState(false);
+  const [chatInput, setChatInput] = useState<string>("");
+  const [isTyping, setIsTyping] = useState<boolean>(false);
   
-  const messagesEndRef = useRef(null);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // تمرير الدردشة للأسفل عند تلقي رسالة جديدة
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [chatMessages, isTyping]);
 
-  // مسح الفكرة الموّلدة عند تغيير المرحلة
   useEffect(() => {
     setAiProjectIdea("");
   }, [selectedStage]);
 
-  // دالة طلب فكرة مشروع من Gemini
   const generateAiProject = async () => {
     if (!selectedStage) return;
     setIsGeneratingProject(true);
@@ -167,13 +185,14 @@ export default function App() {
     تحدث باللغة العربية بطريقة مشجعة.`;
     
     const result = await fetchGeminiWithRetry(prompt);
-    setAiProjectIdea(result);
+    if (result) {
+        setAiProjectIdea(result);
+    }
     setIsGeneratingProject(false);
   };
 
-  // دالة إرسال رسالة في الدردشة
-  const handleSendMessage = async (e) => {
-    e?.preventDefault();
+  const handleSendMessage = async (e?: FormEvent) => {
+    if (e) e.preventDefault();
     if (!chatInput.trim()) return;
 
     const userMessage = chatInput;
@@ -188,7 +207,9 @@ export default function App() {
 
     const aiResponse = await fetchGeminiWithRetry(userMessage, systemPrompt);
     
-    setChatMessages(prev => [...prev, { role: 'ai', text: aiResponse }]);
+    if (aiResponse) {
+        setChatMessages(prev => [...prev, { role: 'ai', text: aiResponse }]);
+    }
     setIsTyping(false);
   };
 
@@ -235,9 +256,8 @@ export default function App() {
                   <div className={`w-full pl-16 md:pl-0 md:w-[45%] ${isEven ? 'md:text-left md:mr-auto' : 'md:text-right md:ml-auto'}`}>
                     <button 
                       onClick={() => setSelectedStage(stage)}
-                      className={`w-full text-right p-6 rounded-2xl border border-slate-800 bg-slate-900/50 hover:bg-slate-800 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-${stage.borderColor.split('-')[1]}-900/20 group relative overflow-hidden`}
+                      className={`w-full text-right p-6 rounded-2xl border border-slate-800 bg-slate-900/50 hover:bg-slate-800 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl group relative overflow-hidden`}
                     >
-                      <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-bl from-transparent via-transparent to-${stage.borderColor.split('-')[1]}-500/5`}></div>
                       <div className={`inline-flex p-3 rounded-xl ${stage.bgColor} ${stage.color} mb-4`}>
                         <Icon className="w-6 h-6" />
                       </div>
@@ -269,10 +289,10 @@ export default function App() {
             className="bg-slate-900 w-full max-w-2xl rounded-3xl border border-slate-800 shadow-2xl overflow-hidden flex flex-col max-h-[90vh]"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className={`p-6 border-b border-slate-800 flex items-start justify-between bg-gradient-to-bl from-slate-900 to-${selectedStage.borderColor.split('-')[1]}-900/20`}>
+            <div className={`p-6 border-b border-slate-800 flex items-start justify-between bg-gradient-to-bl from-slate-900 to-slate-800`}>
               <div className="flex items-center gap-4">
                 <div className={`p-4 rounded-2xl ${selectedStage.bgColor} ${selectedStage.color}`}>
-                  <selectedStage.icon className="w-8 h-8" />
+                  {selectedStage.icon && <selectedStage.icon className="w-8 h-8" />}
                 </div>
                 <div>
                   <span className="text-sm font-bold text-slate-400 block mb-1">المرحلة 0{selectedStage.id}</span>
@@ -288,7 +308,6 @@ export default function App() {
             </div>
 
             <div className="p-6 overflow-y-auto space-y-8 custom-scrollbar">
-              {/* الوصف */}
               <div>
                 <h3 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
                   <BookOpen className="w-5 h-5 text-blue-400" /> نظرة عامة
@@ -298,13 +317,12 @@ export default function App() {
                 </p>
               </div>
 
-              {/* المصادر */}
               <div>
                 <h3 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
                   <PlayCircle className="w-5 h-5 text-red-400" /> مصادر التعلم
                 </h3>
                 <div className="grid gap-3">
-                  {selectedStage.resources.map((res, idx) => (
+                  {selectedStage.resources.map((res: Resource, idx: number) => (
                     <a 
                       key={idx}
                       href={res.url}
@@ -320,20 +338,17 @@ export default function App() {
                 </div>
               </div>
 
-              {/* المشاريع (ثابت + ذكاء اصطناعي) */}
               <div>
                 <h3 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
                   <Wrench className="w-5 h-5 text-yellow-400" /> المشاريع التطبيقية
                 </h3>
                 
                 <div className="space-y-4">
-                  {/* المشروع الأساسي */}
                   <div className="bg-slate-800/40 p-4 rounded-xl border border-slate-700 text-slate-200">
                     <span className="text-xs font-bold text-slate-400 block mb-2">مشروع أساسي:</span>
                     {selectedStage.project}
                   </div>
 
-                  {/* توليد مشروع بالذكاء الاصطناعي */}
                   <div className="bg-gradient-to-r from-blue-900/20 to-purple-900/20 p-4 rounded-xl border border-blue-500/30">
                     <div className="flex items-center justify-between mb-2">
                       <span className="text-xs font-bold text-blue-300 flex items-center gap-1">
@@ -371,10 +386,8 @@ export default function App() {
 
       {/* --- Chatbot Section --- */}
       <div className="fixed bottom-6 left-6 z-40">
-        {/* نافذة الدردشة */}
         {isChatOpen && (
           <div className="absolute bottom-16 left-0 w-80 sm:w-96 bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl flex flex-col overflow-hidden transition-all duration-300 transform origin-bottom-left">
-            {/* Header */}
             <div className="bg-slate-800 p-4 border-b border-slate-700 flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="bg-blue-500/20 p-2 rounded-full">
@@ -390,9 +403,8 @@ export default function App() {
               </button>
             </div>
 
-            {/* Messages */}
             <div className="h-80 p-4 overflow-y-auto flex flex-col gap-3 custom-scrollbar bg-slate-900/50">
-              {chatMessages.map((msg, idx) => (
+              {chatMessages.map((msg: ChatMessage, idx: number) => (
                 <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                   <div className={`max-w-[85%] p-3 rounded-2xl text-sm leading-relaxed ${
                     msg.role === 'user' 
@@ -415,7 +427,6 @@ export default function App() {
               <div ref={messagesEndRef} />
             </div>
 
-            {/* Input Form */}
             <form onSubmit={handleSendMessage} className="p-3 bg-slate-800 border-t border-slate-700 flex items-center gap-2">
               <input 
                 type="text" 
@@ -436,7 +447,6 @@ export default function App() {
           </div>
         )}
 
-        {/* زر الدردشة العائم */}
         <button 
           onClick={() => setIsChatOpen(!isChatOpen)}
           className={`w-14 h-14 rounded-full flex items-center justify-center text-white shadow-lg transition-all duration-300 hover:scale-110 ${
@@ -450,3 +460,4 @@ export default function App() {
     </div>
   );
 }
+
