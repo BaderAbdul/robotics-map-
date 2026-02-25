@@ -1,4 +1,4 @@
-Import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { 
   Bot, Cpu, Code, Zap, Eye, Server, Map, X, ExternalLink, 
   PlayCircle, BookOpen, Wrench, MessageSquare, Send, Sparkles, Loader2 
