@@ -4,6 +4,7 @@ import {
   Bot, Cpu, Code, Zap, Eye, Server, Map, X, ExternalLink, 
   PlayCircle, BookOpen, Wrench, MessageSquare, Send, Sparkles, Loader2 
 } from 'lucide-react';
+import { Analytics } from '@vercel/analytics/react';
 
 // --- إعدادات Gemini API ---
 const apiKey = import.meta.env.VITE_GEMINI_API_KEY || ""; 
@@ -525,6 +526,7 @@ export default function App() {
         </button>
       </div>
 
+      <Analytics />
     </div>
   );
 }
