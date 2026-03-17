@@ -1,7 +1,7 @@
 // src/components/StageModal.tsx
 import { useState, useEffect } from 'react';
 import { X, BookOpen, Wrench, Sparkles, Loader2 } from 'lucide-react';
-import { Stage } from '../types';
+import type { Stage } from '../types';
 import { fetchGeminiWithRetry } from '../services/gemini';
 
 interface Props {

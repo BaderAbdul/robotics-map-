@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { Bot, Map, ExternalLink, Code } from 'lucide-react';
 
-import { Stage } from './types';
+import type { Stage } from './types';
 import { roadmapData } from './data/roadmapData'; 
 import Chatbot from './components/Chatbot';
 import StageModal from './components/StageModal';
