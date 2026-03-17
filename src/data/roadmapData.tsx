@@ -7,47 +7,86 @@ export const roadmapData: Stage[] = [
   {
     id: 1, branch: 'main', title: 'أساسيات الإلكترونيات', icon: Zap, color: 'text-yellow-400', bgColor: 'bg-yellow-400/10', borderColor: 'border-yellow-400', difficulty: 'مبتدئ', difficultyColor: 'bg-green-500/20 text-green-400 border-green-500/30',
     description: 'قبل بناء أي روبوت، يجب أن تفهم كيف تتدفق الكهرباء. تعلم أساسيات الجهد، التيار، المقاومة، وكيفية استخدام لوحة التجارب (Breadboard).',
-    resources: [{ type: 'video', title: 'مقدمة في الإلكترونيات للمبتدئين', url: '#' }],
-    project: 'إضاءة LED باستخدام زر ضغاط ومقاومة.'
+    resources: [
+      { type: 'video', title: 'دورة الإلكترونيات العملية (م. وليد عيسى)', url: 'https://youtube.com/playlist?list=PLww54WQ2wa5rOJ7FcXxi-CMNgmpybv7ei' },
+      { type: 'article', title: 'مقال تفاعلي: ما هي الدائرة الكهربائية؟ (SparkFun)', url: 'https://learn.sparkfun.com/tutorials/what-is-a-circuit' },
+      { type: 'course', title: 'تطبيق عملي: محاكي الدوائر Tinkercad', url: 'https://www.tinkercad.com/learn/circuits' }
+    ],
+    project: 'إضاءة LED باستخدام زر ضغاط ومقاومة، وتجربتها على المحاكي أولاً.'
   },
   {
     id: 2, branch: 'main', title: 'المتحكمات الدقيقة', icon: Cpu, color: 'text-blue-400', bgColor: 'bg-blue-400/10', borderColor: 'border-blue-400', difficulty: 'مبتدئ', difficultyColor: 'bg-green-500/20 text-green-400 border-green-500/30',
     description: 'المتحكم هو "عقل" الروبوت. رحلتك مع Arduino و ESP32 لربط المكونات بالبرمجة.',
-    resources: [{ type: 'course', title: 'دورة أردوينو الشاملة', url: '#' }], project: 'برمجة إشارة مرور ضوئية.'
+    resources: [
+      { type: 'article', title: 'مراجعة: مواد معسكر المتحكمات الدقيقة (فبراير 2026 - GDG Qassim)', url: '#' }, // يمكنك وضع رابط GitHub الخاص بالمعسكر هنا
+      { type: 'video', title: 'دورة أردوينو الشاملة للمبتدئين', url: 'https://youtu.be/zJ-LqeX_fLU' },
+      { type: 'course', title: 'الدروس الرسمية خطوة بخطوة (Arduino Docs)', url: 'https://docs.arduino.cc/tutorials/' }
+    ], 
+    project: 'برمجة إشارة مرور ضوئية تفاعلية.'
   },
   {
     id: 3, branch: 'main', title: 'أساسيات البرمجة للروبوتات', icon: Code, color: 'text-red-400', bgColor: 'bg-red-400/10', borderColor: 'border-red-400', difficulty: 'متوسط', difficultyColor: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30',
-    description: 'تعلم C/C++ لبرمجة المتحكمات، و Python كأساس للذكاء الاصطناعي.',
-    resources: [{ type: 'course', title: 'C++ for Hardware', url: '#' }], project: 'كتابة خوارزمية فرز بسيطة.'
+    description: 'تعلم C/C++ لبرمجة المتحكمات المباشرة، و Python كأساس متين للذكاء الاصطناعي لاحقاً.',
+    resources: [
+      { type: 'course', title: 'دورة أساسيات C++ التفاعلية (FreeCodeCamp)', url: 'https://www.freecodecamp.org/news/c-plus-plus-for-beginners/' },
+      { type: 'course', title: 'تعلم بايثون من الصفر (Kaggle)', url: 'https://www.kaggle.com/learn/python' },
+      { type: 'article', title: 'لماذا بايثون و C++ هما الأهم في الروبوتات؟', url: 'https://spectrum.ieee.org/top-programming-languages-for-robotics' }
+    ], 
+    project: 'كتابة خوارزمية فرز بسيطة بأي من اللغتين.'
   },
   {
     id: 4, branch: 'main', title: 'المحركات والمستشعرات', icon: Wrench, color: 'text-green-400', bgColor: 'bg-green-400/10', borderColor: 'border-green-400', difficulty: 'متوسط', difficultyColor: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30',
     description: 'كيف يتحرك الروبوت ويشعر بمحيطه؟ استخدام محركات DC والسيرفو وحساسات المسافة.',
     hint: '💡 هنا نقطة التحول! بعد هذه المرحلة اختر تخصصك المفضل للتعمق أكثر.',
-    resources: [{ type: 'video', title: 'اختيار المحرك المناسب', url: '#' }], project: 'بناء روبوت متتبع للخط.'
+    resources: [
+      { type: 'video', title: 'كيف تختار المحرك المناسب لروبوتك؟ (DroneBot)', url: 'https://youtu.be/L22pP2yqQkY' },
+      { type: 'article', title: 'الدليل الشامل لاستخدام حساس المسافة (Ultrasonic)', url: 'https://randomnerdtutorials.com/complete-guide-for-ultrasonic-sensor-hc-sr04/' },
+      { type: 'course', title: 'مشروع موجه: بناء روبوت متتبع للخط', url: 'https://projecthub.arduino.cc/robocircuits/line-follower-robot-arduino-nano-279f24' }
+    ], 
+    project: 'بناء وبرمجة روبوت متتبع للخط (Line Follower) يتجنب الحواجز.'
   },
 
   // --- مسار الذكاء الاصطناعي والبرمجيات (يمين) ---
   {
     id: '5a', branch: 'ai', title: 'أنظمة التشغيل المتقدمة (ROS)', icon: Server, color: 'text-purple-400', bgColor: 'bg-purple-400/10', borderColor: 'border-purple-400', difficulty: 'متقدم', difficultyColor: 'bg-red-500/20 text-red-400 border-red-500/30',
-    description: 'الانتقال للروبوتات الذكية باستخدام Raspberry Pi ونظام ROS.',
-    resources: [{ type: 'course', title: 'مقدمة في ROS2', url: '#' }], project: 'تحريك روبوت افتراضي (Turtlesim).'
+    description: 'الانتقال للروبوتات الذكية والمستقلة بالكامل باستخدام Raspberry Pi ونظام تشغيل الروبوتات (ROS2).',
+    resources: [
+      { type: 'course', title: 'المسار الرسمي لتعلم ROS2 (Humble)', url: 'https://docs.ros.org/en/humble/Tutorials.html' },
+      { type: 'video', title: 'دورة بناء روبوت باستخدام ROS2 من الصفر', url: 'https://youtube.com/playlist?list=PLunhqvn6i09OXYQ4GykktbT0PzY1sT9b' },
+      { type: 'article', title: 'كيف تبدأ مع حاسوب Raspberry Pi؟', url: 'https://projects.raspberrypi.org/en/projects/raspberry-pi-getting-started' }
+    ], 
+    project: 'تحريك وتوجيه روبوت افتراضي (Turtlesim) في بيئة ROS.'
   },
   {
     id: '6a', branch: 'ai', title: 'الذكاء الاصطناعي ورؤية الحاسب', icon: Eye, color: 'text-teal-400', bgColor: 'bg-teal-400/10', borderColor: 'border-teal-400', difficulty: 'متقدم', difficultyColor: 'bg-red-500/20 text-red-400 border-red-500/30',
-    description: 'إعطاء الروبوت القدرة على الرؤية باستخدام OpenCV وتعلم الآلة (Python).',
-    resources: [{ type: 'video', title: 'أساسيات Computer Vision', url: '#' }], project: 'برمجة كاميرا لتتبع الوجوه.'
+    description: 'إعطاء الروبوت القدرة على الرؤية وتحليل الصور باستخدام OpenCV وتطبيق نماذج تعلم الآلة.',
+    resources: [
+      { type: 'course', title: 'دورة تعلم الآلة السريعة من Google', url: 'https://developers.google.com/machine-learning/crash-course' },
+      { type: 'video', title: 'دورة رؤية الحاسب باستخدام OpenCV و Python', url: 'https://youtu.be/oXlwWbU8l2o' },
+      { type: 'course', title: 'تدريب نماذج AI ببساطة (Teachable Machine)', url: 'https://teachablemachine.withgoogle.com/' }
+    ], 
+    project: 'برمجة كاميرا للتعرف على الوجوه أو تتبع الأشياء الملونة.'
   },
 
   // --- مسار الهاردوير والدوائر المطبوعة (يسار) ---
   {
     id: '5b', branch: 'hardware', title: 'تصميم الدوائر المطبوعة (PCB)', icon: Layers, color: 'text-orange-400', bgColor: 'bg-orange-400/10', borderColor: 'border-orange-400', difficulty: 'متقدم', difficultyColor: 'bg-red-500/20 text-red-400 border-red-500/30',
-    description: 'تخلص من الأسلاك المزعجة! تعلم تصميم اللوحات المطبوعة باستخدام برامج مثل KiCad أو EasyEDA.',
-    resources: [{ type: 'video', title: 'احترف تصميم PCB من الصفر', url: '#' }], project: 'تصميم وطباعة لوحة تحكم مخصصة لروبوتك.'
+    description: 'تخلص من الأسلاك المزعجة! تعلم تصميم اللوحات المطبوعة الاحترافية باستخدام برامج مثل KiCad.',
+    resources: [
+      { type: 'article', title: 'الدليل الرسمي لتصميم اللوحات ببرنامج KiCad', url: 'https://docs.kicad.org/8.0/en/getting_started_in_kicad/getting_started_in_kicad.html' },
+      { type: 'video', title: 'دورة عملية لتصميم PCB من الصفر (Phil\'s Lab)', url: 'https://youtu.be/aVUqaB0IMh4' },
+      { type: 'course', title: 'دروس تصميم الدوائر بمتصفحك عبر EasyEDA', url: 'https://easyeda.com/page/tutorials' }
+    ], 
+    project: 'تصميم وطباعة لوحة تحكم (Shield) مخصصة لروبوتك.'
   },
   {
     id: '6b', branch: 'hardware', title: 'هندسة المكونات والنظم المدمجة', icon: Microchip, color: 'text-rose-400', bgColor: 'bg-rose-400/10', borderColor: 'border-rose-400', difficulty: 'خبير', difficultyColor: 'bg-purple-500/20 text-purple-400 border-purple-500/30',
-    description: 'التعمق في بنية المعالجات الدقيقة (Architecture)، إدارة الطاقة، وتصميم النظم المدمجة المتقدمة.',
-    resources: [{ type: 'article', title: 'إدارة الطاقة في الروبوتات', url: '#' }], project: 'بناء نظام تحكم متكامل يستهلك طاقة منخفضة جداً.'
+    description: 'التعمق في بنية المعالجات الدقيقة، بروتوكولات الاتصال المتقدمة (I2C, SPI, CAN)، وتصميم النظم المدمجة.',
+    resources: [
+      { type: 'video', title: 'دورة هندسة النظم المدمجة (Embedded Systems)', url: 'https://youtube.com/playlist?list=PLPW8O6W-1chwyTzI3BHwvnb2GQyCGlNvd' },
+      { type: 'article', title: 'دليل تقنيات البطاريات وإدارة الطاقة في الروبوتات', url: 'https://learn.sparkfun.com/tutorials/battery-technologies' },
+      { type: 'article', title: 'مشاريع متقدمة وإلهام في هندسة الروبوتات (Hackaday)', url: 'https://hackaday.com/category/robotics-hacks/' }
+    ], 
+    project: 'بناء نظام تحكم متكامل يستهلك طاقة منخفضة جداً ويدعم الاتصال اللاسلكي.'
   }
 ];
