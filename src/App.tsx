@@ -1,6 +1,5 @@
 // src/App.tsx
 import { useState } from 'react';
-import { Bot, Map, ExternalLink, Code } from 'lucide-react';
 
 import type { Stage } from './types';
 import { roadmapData } from './data/roadmapData'; 
