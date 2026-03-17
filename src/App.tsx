@@ -5,7 +5,7 @@ import type { Stage } from './types';
 import { roadmapData } from './data/roadmapData'; 
 import Chatbot from './components/Chatbot';
 import StageModal from './components/StageModal';
-
+ 
 export default function App() {
   const [selectedStage, setSelectedStage] = useState<Stage | null>(null);
   
