@@ -1,6 +1,6 @@
 // src/components/StageModal.tsx
 import { useState, useEffect } from 'react';
-import { X, BookOpen, PlayCircle, Wrench, Sparkles, Loader2, ExternalLink } from 'lucide-react';
+import { X, BookOpen, Wrench, Sparkles, Loader2 } from 'lucide-react';
 import { Stage } from '../types';
 import { fetchGeminiWithRetry } from '../services/gemini';
 
