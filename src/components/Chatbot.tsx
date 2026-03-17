@@ -2,7 +2,8 @@
 import { useState, useRef, useEffect } from 'react';
 import type { FormEvent } from 'react';
 import { Bot, X, MessageSquare, Send } from 'lucide-react';
-
+import { ChatMessage } from '../types';
+import { fetchGeminiWithRetry } from '../services/gemini';
 
 export default function Chatbot() {
   const [isChatOpen, setIsChatOpen] = useState<boolean>(false);

@@ -1,12 +1,12 @@
 // src/App.tsx
 import { useState } from 'react';
 import { Bot, Map, ExternalLink, Code } from 'lucide-react';
+
 import { Stage } from './types';
-// افترض أنك وضعت مصفوفة roadmapData في ملف منفصل أو تركتها هنا
 import { roadmapData } from './data/roadmapData'; 
 import Chatbot from './components/Chatbot';
 import StageModal from './components/StageModal';
-import { roadmapData } from './data/roadmapData';
+
 
 export default function App() {
   const [selectedStage, setSelectedStage] = useState<Stage | null>(null);
