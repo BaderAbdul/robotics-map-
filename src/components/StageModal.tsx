@@ -1,6 +1,5 @@
-// src/components/StageModal.tsx
 import { useState, useEffect } from 'react';
-import { X, BookOpen, Wrench, Sparkles, Loader2 } from 'lucide-react';
+import { X, BookOpen, Wrench, Sparkles, Loader2, PlayCircle, ExternalLink } from 'lucide-react';
 import type { Stage } from '../types';
 import { fetchGeminiWithRetry } from '../services/gemini';
 
@@ -14,7 +13,7 @@ export default function StageModal({ stage, onClose }: Props) {
   const [isGeneratingProject, setIsGeneratingProject] = useState<boolean>(false);
 
   useEffect(() => {
-    setAiProjectIdea(""); // تصفير الفكرة عند فتح مرحلة جديدة
+    setAiProjectIdea("");
   }, [stage]);
 
   const generateAiProject = async () => {
@@ -33,6 +32,7 @@ export default function StageModal({ stage, onClose }: Props) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm" onClick={onClose}>
       <div className="bg-slate-900 w-full max-w-2xl rounded-3xl border border-slate-700 shadow-2xl overflow-hidden flex flex-col max-h-[90vh]" onClick={(e) => e.stopPropagation()}>
+        {/* Header */}
         <div className={`p-6 border-b border-slate-800 flex items-start justify-between bg-gradient-to-bl from-slate-900 to-slate-800`}>
           <div className="flex items-center gap-4">
             <div className={`p-4 rounded-2xl ${stage.bgColor} ${stage.color}`}>
@@ -53,14 +53,45 @@ export default function StageModal({ stage, onClose }: Props) {
           </button>
         </div>
 
+        {/* Content */}
         <div className="p-6 overflow-y-auto space-y-8 custom-scrollbar">
-          {/* ... قسم النظرة العامة ومصادر التعلم ... */}
-          {/* (استخدم نفس كود الـ HTML الخاص بك للـ Modal هنا) */}
+          
+          {/* النظرة العامة */}
           <div>
             <h3 className="text-lg font-bold text-white mb-3 flex items-center gap-2"><BookOpen className="w-5 h-5 text-blue-400" /> نظرة عامة</h3>
             <p className="text-slate-300 leading-relaxed bg-slate-800/50 p-4 rounded-xl border border-slate-700/50">{stage.description}</p>
+            {stage.hint && (
+              <div className="mt-3 p-3 bg-blue-900/20 border border-blue-500/20 rounded-lg text-blue-300 text-sm font-medium flex items-start gap-2">
+                 <span className="block mt-0.5">{stage.hint}</span>
+              </div>
+            )}
           </div>
 
+          {/* مصادر التعلم (تم إرجاعها هنا) */}
+          <div>
+            <h3 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
+              <PlayCircle className="w-5 h-5 text-red-400" /> مصادر التعلم
+            </h3>
+            <div className="grid gap-3">
+              {stage.resources.map((res: any, idx: number) => (
+                <a 
+                  key={idx}
+                  href={res.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-between p-4 rounded-xl bg-slate-800/30 border border-slate-700/50 hover:bg-slate-800 hover:border-slate-500 transition-all group"
+                >
+                  <div className="flex items-center gap-3">
+                    {res.type === 'video' ? <PlayCircle className="w-5 h-5 text-slate-400 group-hover:text-red-400" /> : <BookOpen className="w-5 h-5 text-slate-400 group-hover:text-blue-400" />}
+                    <span className="text-slate-300 group-hover:text-white font-medium">{res.title}</span>
+                  </div>
+                  <ExternalLink className="w-4 h-4 text-slate-500 group-hover:text-white -rotate-90 rtl:rotate-180" />
+                </a>
+              ))}
+            </div>
+          </div>
+
+          {/* المشاريع التطبيقية */}
           <div>
             <h3 className="text-lg font-bold text-white mb-3 flex items-center gap-2"><Wrench className="w-5 h-5 text-yellow-400" /> المشاريع التطبيقية</h3>
             <div className="space-y-4">

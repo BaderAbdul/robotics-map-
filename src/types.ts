@@ -6,7 +6,7 @@ export interface Resource {
 }
 
 export interface Stage {
-  id: number;
+  id: number | string;
   title: string;
   icon: any; 
   color: string;
@@ -18,6 +18,7 @@ export interface Stage {
   resources: Resource[];
   project: string;
   hint?: string;
+  branch?: 'main' | 'ai' | 'hardware'; // خاصية التشعب الجديدة
 }
 
 export interface ChatMessage {
