@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Bot, Map, ExternalLink, Code, CheckCircle2, Circle } from 'lucide-react';
+import { Bot, Map, ExternalLink, CheckCircle2, Circle } from 'lucide-react';
 import { motion, useScroll, useSpring } from 'framer-motion';
 import type { Stage } from './types';
 import { roadmapData } from './data/roadmapData'; 
