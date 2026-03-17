@@ -23,8 +23,8 @@ export default function App() {
       {/* Timeline */}
       <main className="container mx-auto px-4 py-16 max-w-4xl flex-grow">
         <div className="space-y-12">
-          {roadmapData.map((stage, index) => {
-            const Icon = stage.icon;
+        {roadmapData.map((stage: Stage) => {
+          const Icon = stage.icon;
             return (
               <div key={stage.id} className="relative flex items-center">
                 <button onClick={() => setSelectedStage(stage)} className="w-full text-right p-6 rounded-2xl border border-slate-800/80 bg-slate-900/80 hover:bg-slate-800">
