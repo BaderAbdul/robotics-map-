@@ -4,7 +4,7 @@ export interface Resource {
   title: string;
   url: string;
 }
-
+ 
 export interface Stage {
   id: number | string;
   title: string;
