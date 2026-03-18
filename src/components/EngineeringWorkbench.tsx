@@ -1,11 +1,13 @@
 // src/components/EngineeringWorkbench.tsx
 import { useState } from 'react';
-
+import { Wrench, X, Terminal, ShoppingCart, Loader2, Sparkles, Clipboard, Check, Trash2, Cpu } from 'lucide-react';
+// استيراد المكون الجديد
+import InteractivePinout from './InteractivePinout';
 import { Wrench, X, Terminal, ShoppingCart, Loader2, Sparkles, Clipboard, Check, Trash2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { fetchGeminiWithRetry } from '../services/gemini';
 
-type ToolTab = 'debugger' | 'bom';
+type ToolTab = 'debugger' | 'bom' | 'pinout';
 
 export default function EngineeringWorkbench() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -130,13 +132,18 @@ export default function EngineeringWorkbench() {
 
             {/* Tabs Navigation */}
             <div className="flex border-b border-slate-800 bg-slate-900/50">
-                <button onClick={() => setActiveTab('debugger')} className={`flex-1 flex items-center justify-center gap-2 py-3.5 text-sm font-medium transition-colors border-b-2 ${activeTab === 'debugger' ? 'text-green-400 border-green-500 bg-green-950/20' : 'text-slate-400 border-transparent hover:text-slate-200'}`}>
+                <button onClick={() => setActiveTab('debugger')} className={`flex-1 flex items-center justify-center gap-2 py-3.5 text-xs sm:text-sm font-medium transition-colors border-b-2 ${activeTab === 'debugger' ? 'text-green-400 border-green-500 bg-green-950/20' : 'text-slate-400 border-transparent hover:text-slate-200'}`}>
                     <Terminal className="w-4 h-4" /> مصحح الأكواد
                 </button>
-                <button onClick={() => setActiveTab('bom')} className={`flex-1 flex items-center justify-center gap-2 py-3.5 text-sm font-medium transition-colors border-b-2 ${activeTab === 'bom' ? 'text-teal-400 border-teal-500 bg-teal-950/20' : 'text-slate-400 border-transparent hover:text-slate-200'}`}>
-                    <ShoppingCart className="w-4 h-4" /> مقترح القطع (BOM)
+                <button onClick={() => setActiveTab('bom')} className={`flex-1 flex items-center justify-center gap-2 py-3.5 text-xs sm:text-sm font-medium transition-colors border-b-2 ${activeTab === 'bom' ? 'text-teal-400 border-teal-500 bg-teal-950/20' : 'text-slate-400 border-transparent hover:text-slate-200'}`}>
+                    <ShoppingCart className="w-4 h-4" /> مقترح القطع
+                </button>
+                {/* الزر الثالث الجديد */}
+                <button onClick={() => setActiveTab('pinout')} className={`flex-1 flex items-center justify-center gap-2 py-3.5 text-xs sm:text-sm font-medium transition-colors border-b-2 ${activeTab === 'pinout' ? 'text-blue-400 border-blue-500 bg-blue-950/20' : 'text-slate-400 border-transparent hover:text-slate-200'}`}>
+                    <Cpu className="w-4 h-4" /> خريطة الأقطاب
                 </button>
             </div>
+
 
             {/* Content Area */}
             <div className="p-6 overflow-y-auto flex-grow custom-scrollbar space-y-5">
@@ -227,6 +234,10 @@ export default function EngineeringWorkbench() {
                             </motion.div>
                         )}
                     </div>
+                )}
+                {/* 3. خريطة الأقطاب التفاعلية */}
+                {activeTab === 'pinout' && (
+                    <InteractivePinout />
                 )}
             </div>
           </motion.div>
