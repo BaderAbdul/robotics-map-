@@ -5,36 +5,8 @@ import type { Stage } from './types';
 import { roadmapData } from './data/roadmapData'; 
 import Chatbot from './components/Chatbot';
 import StageModal from './components/StageModal';
-// src/App.tsx
-// ... (الاستدعاءات القديمة)
-import Chatbot from './components/Chatbot';
-import StageModal from './components/StageModal';
-// 1. استدعاء المكون الجديد هنا
-import EngineeringWorkbench from './components/EngineeringWorkbench'; 
+import EngineeringWorkbench from './components/EngineeringWorkbench';
 
-export default function App() {
-  // ... (النفس الكود القديم)
-  const [selectedStage, setSelectedStage] = useState<Stage | null>(null);
-  
-  // ... (Progress Tracker & Scroll logic)
-
-  return (
-    <div dir="rtl" className="min-h-screen ...">
-      
-      {/* ... (Header, Timeline, Footer كما هي) ... */}
-
-      {/* --- Modals, Workbench & Chatbot --- */}
-      {selectedStage && (
-        <StageModal stage={selectedStage} onClose={() => setSelectedStage(null)} />
-      )}
-      
-      {/* 2. إضافة صندوق العدة هنا */}
-      <EngineeringWorkbench /> 
-      
-      <Chatbot />
-    </div>
-  );
-}
 export default function App() {
   const [selectedStage, setSelectedStage] = useState<Stage | null>(null);
   
@@ -72,8 +44,6 @@ export default function App() {
     const Icon = stage.icon;
     const isCompleted = completedStages.includes(stage.id.toString());
     const isEven = isMain && index % 2 === 0;
-
-    // تنسيق رقم المرحلة (مثلاً: 01 أو 05a)
     const formattedId = stage.id.toString().length === 1 ? `0${stage.id}` : stage.id;
 
     return (
@@ -98,7 +68,6 @@ export default function App() {
                 ? 'bg-green-900/10 border-green-500/50 hover:bg-green-900/20 hover:border-green-400' 
                 : 'bg-slate-900/80 border-slate-800/80 hover:bg-slate-800 hover:border-slate-700'}`}
           >
-            {/* زر الإنجاز (Checkbox) */}
             <div 
               onClick={(e) => toggleCompletion(e, stage.id)}
               className="absolute top-6 left-6 z-20 cursor-pointer text-slate-500 hover:text-green-400 transition-colors"
@@ -136,13 +105,11 @@ export default function App() {
   return (
     <div dir="rtl" className="min-h-screen bg-slate-950 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:24px_24px] text-slate-200 font-sans flex flex-col">
       
-      {/* مؤشر القراءة العلوي */}
       <motion.div 
         className="fixed top-0 right-0 left-0 h-1.5 bg-gradient-to-r from-blue-500 via-teal-400 to-green-500 z-50 origin-right"
         style={{ scaleX }}
       />
 
-      {/* --- Header --- */}
       <header className="relative pt-20 pb-12 overflow-hidden border-b border-slate-800/80 bg-slate-950/50 backdrop-blur-sm">
         <div className="absolute top-0 right-0 w-64 h-64 bg-blue-600/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4"></div>
         <div className="absolute bottom-0 left-0 w-64 h-64 bg-green-600/10 rounded-full blur-3xl translate-y-1/4 -translate-x-1/4"></div>
@@ -156,7 +123,6 @@ export default function App() {
             خارطة طريق الروبوتات
           </h1>
           
-          {/* النصوص الترحيبية المستعادة */}
           <p className="text-lg text-slate-400 max-w-2xl mx-auto mb-6 leading-relaxed">
             دليلك الشامل من الصفر وحتى احتراف بناء وبرمجة الروبوتات الذكية. مقدم لكم من قسم الروبوتات في مجتمع مطوري جوجل <span className="font-semibold text-white px-2 py-0.5 bg-slate-800 rounded-md border border-slate-700">GDG Qassim</span>.
           </p>
@@ -165,7 +131,6 @@ export default function App() {
             <span>انقر على أي مرحلة للبدء واستكشاف المصادر</span>
           </div>
           
-          {/* شريط الإنجاز (Progress Bar) */}
           <div className="max-w-md mx-auto bg-slate-900/80 border border-slate-700 p-4 rounded-2xl backdrop-blur-sm shadow-xl">
             <div className="flex justify-between text-sm font-bold text-slate-300 mb-2">
               <span>نسبة الإنجاز في المسار:</span>
@@ -183,10 +148,7 @@ export default function App() {
         </div>
       </header>
 
-      {/* --- Timeline Section --- */}
       <main className="container mx-auto px-4 py-16 max-w-5xl flex-grow">
-        
-        {/* المسار الأساسي (خطي) */}
         <div className="relative mb-20">
           <div className="absolute top-0 bottom-0 right-[28px] md:right-1/2 w-0.5 bg-gradient-to-b from-blue-500/50 to-purple-500/50 rounded-full"></div>
           <div className="space-y-12">
@@ -194,7 +156,6 @@ export default function App() {
           </div>
         </div>
 
-        {/* فاصل التشعب (Split Divider) */}
         <motion.div 
           initial={{ opacity: 0, scale: 0.8 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }}
           className="flex flex-col items-center justify-center mb-16 text-center"
@@ -210,10 +171,7 @@ export default function App() {
           </div>
         </motion.div>
 
-        {/* المسارات المتشعبة (Grid) */}
         <div className="grid md:grid-cols-2 gap-8 relative">
-          
-          {/* مسار الهاردوير (يسار) */}
           <div className="relative p-6 rounded-3xl border border-slate-800/50 bg-slate-900/30">
             <h3 className="text-2xl font-bold text-center mb-8 text-orange-400 bg-orange-400/10 py-3 rounded-xl border border-orange-500/20">
               مسار الدوائر والمكونات (Hardware)
@@ -221,19 +179,15 @@ export default function App() {
             <div>{hwStages.map((stage, index) => <StageCard key={stage.id} stage={stage} index={index} />)}</div>
           </div>
 
-          {/* مسار الذكاء الاصطناعي (يمين) */}
           <div className="relative p-6 rounded-3xl border border-slate-800/50 bg-slate-900/30">
             <h3 className="text-2xl font-bold text-center mb-8 text-teal-400 bg-teal-400/10 py-3 rounded-xl border border-teal-500/20">
               مسار الذكاء الاصطناعي والبرمجيات
             </h3>
             <div>{aiStages.map((stage, index) => <StageCard key={stage.id} stage={stage} index={index} />)}</div>
           </div>
-
         </div>
-
       </main>
 
-      {/* --- Footer (مستعاد بالكامل) --- */}
       <footer className="mt-auto border-t border-slate-800/80 bg-slate-900/50 backdrop-blur-md py-8">
         <div className="container mx-auto px-4 text-center">
           <div className="inline-flex items-center justify-center gap-2 mb-5">
@@ -241,7 +195,6 @@ export default function App() {
             <Code className="w-4 h-4 text-slate-500" />
             <span className="w-8 h-px bg-slate-700"></span>
           </div>
-
           <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-6 mb-4">
             <p className="text-slate-300 text-sm">
               برمجة وتطوير الموقع: <span className="text-blue-400 font-bold tracking-wide">بدر الدخيل الله</span> ⚡
@@ -251,7 +204,6 @@ export default function App() {
               إعداد المسار والمحتوى: <span className="text-teal-400 font-bold tracking-wide">فريق الروبوتات</span> 🤖
             </p>
           </div>
-
           <div className="text-slate-400 text-[11px] leading-relaxed max-w-2xl mx-auto bg-slate-800/30 p-3 rounded-xl border border-slate-700/50 mb-6">
             <p className="mb-1">
               <span className="font-semibold text-slate-300">قائدة القسم:</span> رغد العبيد &nbsp;|&nbsp; 
@@ -261,7 +213,6 @@ export default function App() {
               <span className="font-semibold text-slate-300">أعضاء القسم:</span> رهف الحربي، شاهر الحربي، منار النقيدان، مها المطرفي، بدر الدخيل الله
             </p>
           </div>
-
           <p className="text-slate-500 text-xs font-medium">
             مجتمع مطوري جوجل جامعة القصيم (GDG Qassim) &copy; 2026
           </p>
@@ -269,6 +220,7 @@ export default function App() {
       </footer>
 
       {selectedStage && <StageModal stage={selectedStage} onClose={() => setSelectedStage(null)} />}
+      <EngineeringWorkbench />
       <Chatbot />
     </div>
   );

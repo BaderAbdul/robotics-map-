@@ -1,5 +1,6 @@
 // src/components/EngineeringWorkbench.tsx
-import { useState, useRef, useEffect } from 'react';
+import { useState } from 'react';
+
 import { Wrench, X, Terminal, ShoppingCart, Loader2, Sparkles, Clipboard, Check, Trash2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { fetchGeminiWithRetry } from '../services/gemini';
