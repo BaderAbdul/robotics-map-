@@ -5,7 +5,36 @@ import type { Stage } from './types';
 import { roadmapData } from './data/roadmapData'; 
 import Chatbot from './components/Chatbot';
 import StageModal from './components/StageModal';
+// src/App.tsx
+// ... (الاستدعاءات القديمة)
+import Chatbot from './components/Chatbot';
+import StageModal from './components/StageModal';
+// 1. استدعاء المكون الجديد هنا
+import EngineeringWorkbench from './components/EngineeringWorkbench'; 
 
+export default function App() {
+  // ... (النفس الكود القديم)
+  const [selectedStage, setSelectedStage] = useState<Stage | null>(null);
+  
+  // ... (Progress Tracker & Scroll logic)
+
+  return (
+    <div dir="rtl" className="min-h-screen ...">
+      
+      {/* ... (Header, Timeline, Footer كما هي) ... */}
+
+      {/* --- Modals, Workbench & Chatbot --- */}
+      {selectedStage && (
+        <StageModal stage={selectedStage} onClose={() => setSelectedStage(null)} />
+      )}
+      
+      {/* 2. إضافة صندوق العدة هنا */}
+      <EngineeringWorkbench /> 
+      
+      <Chatbot />
+    </div>
+  );
+}
 export default function App() {
   const [selectedStage, setSelectedStage] = useState<Stage | null>(null);
   
