@@ -1,11 +1,8 @@
-// src/components/EngineeringWorkbench.tsx
 import { useState } from 'react';
 import { Wrench, X, Terminal, ShoppingCart, Loader2, Sparkles, Clipboard, Check, Trash2, Cpu } from 'lucide-react';
-// استيراد المكون الجديد
-import InteractivePinout from './InteractivePinout';
-import { Wrench, X, Terminal, ShoppingCart, Loader2, Sparkles, Clipboard, Check, Trash2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { fetchGeminiWithRetry } from '../services/gemini';
+import InteractivePinout from './InteractivePinout';
 
 type ToolTab = 'debugger' | 'bom' | 'pinout';
 
@@ -138,12 +135,10 @@ export default function EngineeringWorkbench() {
                 <button onClick={() => setActiveTab('bom')} className={`flex-1 flex items-center justify-center gap-2 py-3.5 text-xs sm:text-sm font-medium transition-colors border-b-2 ${activeTab === 'bom' ? 'text-teal-400 border-teal-500 bg-teal-950/20' : 'text-slate-400 border-transparent hover:text-slate-200'}`}>
                     <ShoppingCart className="w-4 h-4" /> مقترح القطع
                 </button>
-                {/* الزر الثالث الجديد */}
                 <button onClick={() => setActiveTab('pinout')} className={`flex-1 flex items-center justify-center gap-2 py-3.5 text-xs sm:text-sm font-medium transition-colors border-b-2 ${activeTab === 'pinout' ? 'text-blue-400 border-blue-500 bg-blue-950/20' : 'text-slate-400 border-transparent hover:text-slate-200'}`}>
                     <Cpu className="w-4 h-4" /> خريطة الأقطاب
                 </button>
             </div>
-
 
             {/* Content Area */}
             <div className="p-6 overflow-y-auto flex-grow custom-scrollbar space-y-5">
@@ -184,7 +179,7 @@ export default function EngineeringWorkbench() {
                             <motion.div initial={{opacity:0, y:10}} animate={{opacity:1, y:0}} className="mt-6 space-y-3 bg-slate-800/50 p-5 rounded-xl border border-slate-700">
                                 <h5 className="text-sm font-bold text-white flex items-center gap-2"><Check className="w-4 h-4 text-green-400" /> تحليل ورأي "روبو":</h5>
                                 <div className="text-slate-300 text-xs leading-relaxed space-y-2 whitespace-pre-line prose prose-invert prose-xs max-w-none">
-                                    {debugResponse.replace(/```cpp[\s\S]*?```/, '')} {/* عرض الشرح فقط */}
+                                    {debugResponse.replace(/```cpp[\s\S]*?```/, '')}
                                 </div>
                                 
                                 {extractCorrectedCode(debugResponse) && (
@@ -235,6 +230,7 @@ export default function EngineeringWorkbench() {
                         )}
                     </div>
                 )}
+
                 {/* 3. خريطة الأقطاب التفاعلية */}
                 {activeTab === 'pinout' && (
                     <InteractivePinout />
