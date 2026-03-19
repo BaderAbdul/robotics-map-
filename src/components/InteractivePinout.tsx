@@ -1,7 +1,7 @@
 // src/components/InteractivePinout.tsx
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Zap, Activity, Hash, PowerOff, Unplug, RefreshCcw, BellRing, Wifi } from 'lucide-react';
+import { Zap, Activity, Hash, PowerOff, Unplug, RefreshCcw, Wifi } from 'lucide-react';
 
 // تعريف بيانات جميع الأقطاب الـ 32 للوحة Arduino Uno R3
 const pins = [
