@@ -4,137 +4,128 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Zap, Activity, Hash, PowerOff } from 'lucide-react';
 
 const pins = [
-  // أقطاب الطاقة (Bottom Left)
-  { id: '3v3', name: '3.3V', type: 'power', icon: Zap, color: 'text-orange-400', bgColor: 'bg-orange-500', desc: 'مخرج طاقة 3.3 فولت للحساسات الدقيقة.' },
-  { id: '5v', name: '5V', type: 'power', icon: Zap, color: 'text-red-400', bgColor: 'bg-red-500', desc: 'مخرج طاقة 5 فولت الأساسي لتشغيل معظم القطع.' },
-  { id: 'gnd1', name: 'GND', type: 'gnd', icon: PowerOff, color: 'text-slate-400', bgColor: 'bg-slate-500', desc: 'القطب السالب (الأرضي) لإكمال الدائرة الكهربائية.' },
-  { id: 'vin', name: 'Vin', type: 'power', icon: Zap, color: 'text-red-500', bgColor: 'bg-red-600', desc: 'مدخل طاقة لتشغيل اللوحة ببطارية خارجية (7-12 فولت).' },
+  // أقطاب الطاقة
+  { id: '3v3', name: '3.3V', type: 'power', icon: Zap, color: 'text-orange-400', glow: 'shadow-[0_0_15px_#f97316]', desc: 'مخرج طاقة 3.3 فولت للحساسات الدقيقة.' },
+  { id: '5v', name: '5V', type: 'power', icon: Zap, color: 'text-red-400', glow: 'shadow-[0_0_15px_#ef4444]', desc: 'مخرج طاقة 5 فولت الأساسي لتشغيل معظم القطع.' },
+  { id: 'gnd1', name: 'GND', type: 'gnd', icon: PowerOff, color: 'text-slate-400', glow: 'shadow-[0_0_15px_#94a3b8]', desc: 'القطب السالب (الأرضي) لإكمال الدائرة الكهربائية.' },
+  { id: 'vin', name: 'Vin', type: 'power', icon: Zap, color: 'text-red-500', glow: 'shadow-[0_0_15px_#ef4444]', desc: 'مدخل طاقة لتشغيل اللوحة ببطارية خارجية.' },
   
-  // أقطاب تناظرية (Bottom Right)
-  { id: 'a0', name: 'A0', type: 'analog', icon: Activity, color: 'text-green-400', bgColor: 'bg-green-500', desc: 'مدخل تناظري (Analog In).' },
-  { id: 'a1', name: 'A1', type: 'analog', icon: Activity, color: 'text-green-400', bgColor: 'bg-green-500', desc: 'مدخل تناظري لقراءة الحساسات المتغيرة.' },
-  { id: 'a2', name: 'A2', type: 'analog', icon: Activity, color: 'text-green-400', bgColor: 'bg-green-500', desc: 'مدخل تناظري لقراءة الحساسات المتغيرة.' },
+  // أقطاب تناظرية
+  { id: 'a0', name: 'A0', type: 'analog', icon: Activity, color: 'text-teal-400', glow: 'shadow-[0_0_15px_#2dd4bf]', desc: 'مدخل تناظري (Analog In).' },
+  { id: 'a1', name: 'A1', type: 'analog', icon: Activity, color: 'text-teal-400', glow: 'shadow-[0_0_15px_#2dd4bf]', desc: 'مدخل تناظري لقراءة الحساسات المتغيرة.' },
+  { id: 'a2', name: 'A2', type: 'analog', icon: Activity, color: 'text-teal-400', glow: 'shadow-[0_0_15px_#2dd4bf]', desc: 'مدخل تناظري لقراءة الحساسات المتغيرة.' },
   
-  // أقطاب رقمية و PWM (Top Right)
-  { id: 'd13', name: '13', type: 'digital', icon: Hash, color: 'text-blue-400', bgColor: 'bg-blue-500', desc: 'مخرج رقمي (يحتوي على LED مدمج باللوحة).' },
-  { id: 'd11', name: '~11', type: 'pwm', icon: Activity, color: 'text-purple-400', bgColor: 'bg-purple-500', desc: 'مخرج PWM (نبضات) للتحكم بسرعة المحركات.' },
-  { id: 'd9', name: '~9', type: 'pwm', icon: Activity, color: 'text-purple-400', bgColor: 'bg-purple-500', desc: 'مخرج PWM تناظري زائف.' },
-  { id: 'd2', name: '2', type: 'digital', icon: Hash, color: 'text-blue-400', bgColor: 'bg-blue-500', desc: 'مخرج/مدخل رقمي (يدعم المقاطعة).' },
+  // أقطاب رقمية و PWM
+  { id: 'd13', name: '13', type: 'digital', icon: Hash, color: 'text-blue-400', glow: 'shadow-[0_0_15px_#60a5fa]', desc: 'مخرج رقمي (يحتوي على LED مدمج باللوحة).' },
+  { id: 'd11', name: '~11', type: 'pwm', icon: Activity, color: 'text-purple-400', glow: 'shadow-[0_0_15px_#a855f7]', desc: 'مخرج PWM (نبضات) للتحكم بسرعة المحركات.' },
+  { id: 'd9', name: '~9', type: 'pwm', icon: Activity, color: 'text-purple-400', glow: 'shadow-[0_0_15px_#a855f7]', desc: 'مخرج PWM تناظري زائف (Pulse Width Modulation) للتحكم الدقيق.' },
+  { id: 'd2', name: '2', type: 'digital', icon: Hash, color: 'text-blue-400', glow: 'shadow-[0_0_15px_#60a5fa]', desc: 'مخرج/مدخل رقمي (يدعم المقاطعة).' },
 ];
 
 export default function InteractivePinout() {
   const [hoveredPin, setHoveredPin] = useState<string | null>(null);
   const activePinData = pins.find(p => p.id === hoveredPin);
 
-  // دالة لرسم منفذ أسود (Pin Socket)
   const PinSocket = ({ pin }: { pin: any }) => {
     const isHovered = hoveredPin === pin.id;
     return (
       <div 
-        className="w-4 h-4 bg-slate-950 border border-slate-700 rounded-sm flex items-center justify-center cursor-crosshair group relative"
+        className="w-5 h-5 bg-[#0f172a] border border-slate-700/50 rounded-sm flex items-center justify-center cursor-pointer group relative transition-transform hover:scale-110 z-20"
         onMouseEnter={() => setHoveredPin(pin.id)} 
         onMouseLeave={() => setHoveredPin(null)}
       >
-        <div className={`w-1.5 h-1.5 rounded-full ${isHovered ? `${pin.bgColor} shadow-[0_0_10px_#fff]` : 'bg-slate-600'} transition-all duration-150`}></div>
-        {/* التسمية التوضيحية البصرية (Label) */}
-        <span className={`absolute -top-4 text-[9px] font-mono font-bold transition-colors ${isHovered ? pin.color : 'text-slate-400'}`}>
-          {pin.name}
-        </span>
+        {/* النقطة المضيئة (Glowing Dot) */}
+        <div className={`w-2 h-2 rounded-full transition-all duration-300 ${isHovered ? `bg-white ${pin.glow}` : 'bg-slate-700'}`}></div>
+        
+        {/* اسم القطب يظهر عند التمرير مثل الصورة */}
+        <AnimatePresence>
+          {isHovered && (
+             <motion.div 
+               initial={{ opacity: 0, y: -5 }} animate={{ opacity: 1, y: -15 }} exit={{ opacity: 0, y: -5 }}
+               className={`absolute px-2 py-0.5 rounded text-[10px] font-bold bg-slate-900 border border-slate-700 whitespace-nowrap z-30 ${pin.color} ${pin.glow}`}
+             >
+               {pin.name}
+             </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     );
   };
 
   return (
-    <div className="flex flex-col items-center gap-6">
-      <p className="text-slate-400 text-xs text-center leading-relaxed">الآن هذا هو الأردوينو الحقيقي! مرر الماوس فوق المنافذ (Sockets) لمعرفة وظيفتها.</p>
+    <div className="flex flex-col items-center gap-8 py-4">
+      <p className="text-slate-400 text-xs text-center leading-relaxed">
+        الآن هذا هو الأردوينو الحقيقي! مرر الماوس فوق المنافذ (Sockets) لمعرفة وظيفتها.
+      </p>
       
-      {/* نموذج Arduino Uno R3 واقعي (مصمم بـ CSS) */}
-      <div className="relative w-[380px] h-[260px] bg-[#008184] rounded-xl shadow-[0_15px_40px_rgba(0,0,0,0.6)] border-2 border-[#006a6c] p-4 overflow-visible origin-center scale-90 sm:scale-100">
+      {/* حاوية اللوحة مع تأثير المنظور 3D */}
+      <div className="relative w-full h-[280px] flex items-center justify-center" style={{ perspective: '1000px' }}>
         
-        {/* لون النحاس الخفي وتفاصيل الـ PCB */}
-        <div className="absolute inset-0 bg-[radial-gradient(#00979c_1px,transparent_1px)] bg-[size:10px_10px] opacity-30 rounded-xl"></div>
-        <div className="absolute top-3 left-4 text-[11px] font-extrabold text-white/50 tracking-widest">ARDUINO UNO R3</div>
-        <div className="absolute bottom-3 right-4 text-[9px] font-bold text-white/20">GDG QASSIM EDITION</div>
+        {/* اللوحة نفسها (مائلة بتقنية CSS 3D) */}
+        <div 
+          className="relative w-[320px] h-[220px] bg-[#1e5a60] rounded-xl shadow-[-20px_20px_30px_rgba(0,0,0,0.5)] border-2 border-[#164246] p-4 transition-transform duration-500 hover:rotate-x-[50deg] hover:rotate-z-[-25deg]"
+          style={{ transform: 'rotateX(55deg) rotateZ(-30deg)', transformStyle: 'preserve-3d' }}
+        >
+          {/* تفاصيل اللوحة */}
+          <div className="absolute top-2 left-2 text-[10px] font-extrabold text-white/30 tracking-widest">ARDUINO UNO</div>
+          <div className="absolute bottom-2 right-2 text-[8px] font-bold text-white/20">GDG QASSIM</div>
 
-        {/* --- المكونات المادية الكبيرة (منافذ الطاقة والـ USB) --- */}
-        
-        {/* مقبس الطاقة الأسود (Power Jack) */}
-        <div className="w-10 h-14 bg-black border-2 border-slate-800 rounded-r-md absolute top-[-5px] left-[-2px] shadow-lg flex items-center justify-center">
-           <div className="w-6 h-6 bg-slate-900 rounded-full border border-slate-700"></div>
-        </div>
+          {/* منفذ الـ USB */}
+          <div className="w-14 h-12 bg-slate-300 border border-slate-400 rounded-sm absolute bottom-2 left-[-10px] flex items-center justify-center" style={{ transform: 'translateZ(10px)' }}>
+             <div className="w-10 h-6 bg-slate-100 rounded-sm border border-slate-300"></div>
+          </div>
 
-        {/* منفذ الـ USB الفضي */}
-        <div className="w-16 h-12 bg-gradient-to-r from-slate-300 via-slate-100 to-slate-400 border border-slate-400 rounded-sm absolute bottom-4 left-[-10px] shadow-2xl flex items-center justify-center">
-           <div className="w-12 h-8 bg-slate-100 rounded-sm border border-slate-300 flex items-center justify-center">
-             <div className="w-8 h-4 bg-slate-300 rounded-sm"></div>
-           </div>
-        </div>
+          {/* شريحة ATmega328P */}
+          <div className="w-24 h-7 bg-[#0f172a] rounded-sm absolute center flex items-center justify-center shadow-lg" style={{ transform: 'translateZ(5px)' }}>
+              <span className="text-[6px] font-mono text-slate-500">ATMEGA328P</span>
+          </div>
 
-        {/* شريحة ATmega328P (المتحكم الرئيسي الطويل) */}
-        <div className="w-28 h-8 bg-slate-950 border border-slate-800 rounded-sm absolute center flex items-center justify-center p-1 shadow-inner">
-           <div className="w-24 h-5 bg-slate-900 rounded-sm border-t border-slate-700 flex items-center justify-center">
-              <span className="text-[7px] font-mono text-slate-500">ATMEGA328P</span>
-              <div className="w-1.5 h-1.5 bg-slate-700 rounded-full absolute top-1 left-1"></div>
-           </div>
-        </div>
+          {/* صف المنافذ العلوي */}
+          <div className="absolute top-2 right-2 flex flex-col items-end" style={{ transform: 'translateZ(8px)' }}>
+            <div className="flex items-center gap-1 bg-black/40 p-1 rounded-sm border border-white/10 backdrop-blur-sm">
+              {pins.filter(p => ['digital', 'pwm'].includes(p.type)).map(pin => <PinSocket key={pin.id} pin={pin} />)}
+            </div>
+          </div>
 
-        {/* --- منافذ التوصيل (Header Sockets) - أماكن الأقطاب الفعلية --- */}
+          {/* صف المنافذ السفلي الأيمن */}
+          <div className="absolute bottom-2 right-2 flex flex-col items-end" style={{ transform: 'translateZ(8px)' }}>
+            <div className="flex items-center gap-1 bg-black/40 p-1 rounded-sm border border-white/10 backdrop-blur-sm">
+              {pins.filter(p => p.type === 'analog').map(pin => <PinSocket key={pin.id} pin={pin} />)}
+            </div>
+          </div>
 
-        {/* صف المنافذ العلوي (Digital / PWM) */}
-        <div className="absolute top-2 right-4 flex flex-col items-end">
-          <span className="text-[9px] font-bold text-white/70 mb-1">DIGITAL (PWM ~)</span>
-          <div className="flex items-center gap-1.5 bg-slate-950 p-1 rounded-sm shadow-md">
-            {pins.filter(p => ['digital', 'pwm'].includes(p.type)).map(pin => (
-              <PinSocket key={pin.id} pin={pin} />
-            ))}
+          {/* صف المنافذ السفلي الأيسر */}
+          <div className="absolute bottom-2 left-16 flex flex-col items-start" style={{ transform: 'translateZ(8px)' }}>
+            <div className="flex items-center gap-1 bg-black/40 p-1 rounded-sm border border-white/10 backdrop-blur-sm">
+              {pins.filter(p => ['power', 'gnd'].includes(p.type)).map(pin => <PinSocket key={pin.id} pin={pin} />)}
+            </div>
           </div>
         </div>
-
-        {/* صف المنافذ السفلي الأيمن (Analog In) */}
-        <div className="absolute bottom-2 right-4 flex flex-col items-end">
-          <span className="text-[9px] font-bold text-white/70 mb-1">ANALOG IN</span>
-          <div className="flex items-center gap-1.5 bg-slate-950 p-1 rounded-sm shadow-md">
-            {pins.filter(p => p.type === 'analog').map(pin => (
-              <PinSocket key={pin.id} pin={pin} />
-            ))}
-          </div>
-        </div>
-
-        {/* صف المنافذ السفلي الأيسر (Power) */}
-        <div className="absolute bottom-2 left-20 flex flex-col items-start">
-          <span className="text-[9px] font-bold text-white/70 mb-1">POWER</span>
-          <div className="flex items-center gap-1.5 bg-slate-950 p-1 rounded-sm shadow-md">
-            {pins.filter(p => ['power', 'gnd'].includes(p.type)).map(pin => (
-              <PinSocket key={pin.id} pin={pin} />
-            ))}
-          </div>
-        </div>
-
-        {/* زر Reset الأحمر */}
-        <div className="w-4 h-4 bg-red-600 rounded-full absolute bottom-4 left-6 border-2 border-red-800 shadow-md"></div>
-
       </div>
 
-      {/* بطاقة الشرح الديناميكية */}
-      <div className="h-28 w-full bg-slate-950/50 border border-slate-800 rounded-xl p-4 relative overflow-hidden flex items-center justify-center shadow-inner">
+      {/* بطاقة الشرح المطابقة للصورة المرفقة */}
+      <div className="h-32 w-full bg-[#0b1120] border border-slate-800 rounded-2xl p-5 relative overflow-hidden flex items-center shadow-xl">
         <AnimatePresence mode="wait">
           {activePinData ? (
             <motion.div 
               key={activePinData.id}
-              initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }} transition={{ duration: 0.15 }}
-              className="flex items-start gap-4 w-full"
+              initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 20 }} transition={{ duration: 0.2 }}
+              className="flex items-center justify-between w-full gap-4"
             >
-              <div className={`p-3 rounded-xl ${activePinData.bgColor} bg-opacity-20 border border-${activePinData.bgColor.split('-')[1]}-500/30`}>
-                <activePinData.icon className={`w-6 h-6 ${activePinData.color}`} />
+              <div className="flex-1 space-y-2">
+                <h5 className="text-sm font-bold text-slate-300">
+                  العنوان: <span className={`${activePinData.color} tracking-wider`}>قطب {activePinData.name}</span>
+                </h5>
+                <p className="text-xs text-slate-400 font-medium">الوصف:</p>
+                <p className="text-sm text-slate-200 leading-relaxed font-bold">{activePinData.desc}</p>
               </div>
-              <div className="flex-1">
-                <h5 className={`text-sm font-bold mb-1.5 ${activePinData.color}`}>قطب {activePinData.name}</h5>
-                <p className="text-xs text-slate-300 leading-relaxed font-medium">{activePinData.desc}</p>
+              <div className={`p-4 rounded-xl bg-slate-900 border border-slate-700/50 shadow-inner ${activePinData.glow}`}>
+                <activePinData.icon className={`w-8 h-8 ${activePinData.color}`} />
               </div>
             </motion.div>
           ) : (
-             <motion.p key="empty" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="text-xs text-slate-500 font-medium flex items-center gap-2">
-                <Zap className="w-4 h-4 opacity-50" /> قم بتحديد أحد المنافذ على اللوحة لعرض الشرح.
+             <motion.p key="empty" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="text-xs text-slate-500 font-medium text-center w-full">
+                قم بتحديد أحد المنافذ على اللوحة لعرض الشرح.
              </motion.p>
           )}
         </AnimatePresence>

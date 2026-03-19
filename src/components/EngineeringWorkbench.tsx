@@ -127,16 +127,16 @@ export default function EngineeringWorkbench() {
               </button>
             </div>
 
-            {/* Tabs Navigation */}
-            <div className="flex border-b border-slate-800 bg-slate-900/50">
-                <button onClick={() => setActiveTab('debugger')} className={`flex-1 flex items-center justify-center gap-2 py-3.5 text-xs sm:text-sm font-medium transition-colors border-b-2 ${activeTab === 'debugger' ? 'text-green-400 border-green-500 bg-green-950/20' : 'text-slate-400 border-transparent hover:text-slate-200'}`}>
-                    <Terminal className="w-4 h-4" /> مصحح الأكواد
+            {/* Tabs Navigation (محدث للتصميم الجديد) */}
+            <div className="flex gap-6 border-b border-slate-800/80 px-6 pt-4 bg-slate-900/80">
+                <button onClick={() => setActiveTab('debugger')} className={`pb-3 text-xs sm:text-sm font-medium transition-colors border-b-2 relative ${activeTab === 'debugger' ? 'text-teal-400 border-teal-400' : 'text-slate-400 border-transparent hover:text-slate-200'}`}>
+                    مصحح AI للأكواد
                 </button>
-                <button onClick={() => setActiveTab('bom')} className={`flex-1 flex items-center justify-center gap-2 py-3.5 text-xs sm:text-sm font-medium transition-colors border-b-2 ${activeTab === 'bom' ? 'text-teal-400 border-teal-500 bg-teal-950/20' : 'text-slate-400 border-transparent hover:text-slate-200'}`}>
-                    <ShoppingCart className="w-4 h-4" /> مقترح القطع
+                <button onClick={() => setActiveTab('bom')} className={`pb-3 text-xs sm:text-sm font-medium transition-colors border-b-2 relative ${activeTab === 'bom' ? 'text-teal-400 border-teal-400' : 'text-slate-400 border-transparent hover:text-slate-200'}`}>
+                    مقترح القطع (BOM)
                 </button>
-                <button onClick={() => setActiveTab('pinout')} className={`flex-1 flex items-center justify-center gap-2 py-3.5 text-xs sm:text-sm font-medium transition-colors border-b-2 ${activeTab === 'pinout' ? 'text-blue-400 border-blue-500 bg-blue-950/20' : 'text-slate-400 border-transparent hover:text-slate-200'}`}>
-                    <Cpu className="w-4 h-4" /> خريطة الأقطاب
+                <button onClick={() => setActiveTab('pinout')} className={`pb-3 text-xs sm:text-sm font-medium transition-colors border-b-2 relative ${activeTab === 'pinout' ? 'text-teal-400 border-teal-400' : 'text-slate-400 border-transparent hover:text-slate-200'}`}>
+                    عارض تفاعلي 3D
                 </button>
             </div>
 
