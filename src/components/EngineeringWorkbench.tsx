@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Wrench, X, Terminal, ShoppingCart, Loader2, Sparkles, Clipboard, Check, Trash2, Cpu } from 'lucide-react';
+import { Wrench, X, ShoppingCart, Loader2, Sparkles, Clipboard, Check, Trash2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { fetchGeminiWithRetry } from '../services/gemini';
 import InteractivePinout from './InteractivePinout';
