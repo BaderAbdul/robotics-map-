@@ -136,7 +136,7 @@ export default function EngineeringWorkbench() {
                     مقترح القطع (BOM)
                 </button>
                 <button onClick={() => setActiveTab('pinout')} className={`pb-3 text-xs sm:text-sm font-medium transition-colors border-b-2 relative ${activeTab === 'pinout' ? 'text-teal-400 border-teal-400' : 'text-slate-400 border-transparent hover:text-slate-200'}`}>
-                    عارض تفاعلي 3D
+                    عارض تفاعلي للوحة ARDUINO UNO 
                 </button>
             </div>
 
