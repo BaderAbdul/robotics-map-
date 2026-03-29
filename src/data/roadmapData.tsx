@@ -28,9 +28,9 @@ export const roadmapData: Stage[] = [
     id: 3, branch: 'main', title: 'أساسيات البرمجة للروبوتات', icon: Code, color: 'text-red-400', bgColor: 'bg-red-400/10', borderColor: 'border-red-400', difficulty: 'متوسط', difficultyColor: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30',
     description: 'تعلم C/C++ لبرمجة المتحكمات المباشرة، و Python كأساس متين للذكاء الاصطناعي لاحقاً.',
     resources: [
-      { type: 'course', title: 'دورة أساسيات C++ التفاعلية (FreeCodeCamp)', url: 'https://www.freecodecamp.org/news/c-plus-plus-for-beginners/' },
+      { type: 'course', title: 'دورة أساسيات C++ التفاعلية - أسامة الزيرو (عربي)', url: 'https://www.youtube.com/playlist?list=PLDoPjvoNmBAwy-rS6WKudwVeb_x63EzgS' },
       { type: 'course', title: 'تعلم بايثون من الصفر (Kaggle)', url: 'https://www.kaggle.com/learn/python' },
-      { type: 'article', title: 'لماذا بايثون و C++ هما الأهم في الروبوتات؟', url: 'https://spectrum.ieee.org/top-programming-languages-for-robotics' }
+      { type: 'article', title: 'لماذا بايثون و C++ هما الأهم في الروبوتات؟', url: 'https://spectrum.ieee.org/top-programming-languages/' }
     ], 
     project: 'كتابة خوارزمية فرز بسيطة بأي من اللغتين.'
   },
@@ -41,7 +41,7 @@ export const roadmapData: Stage[] = [
     resources: [
       { type: 'video', title: 'كيف تختار المحرك المناسب لروبوتك؟ (DroneBot)', url: 'https://youtu.be/L22pP2yqQkY' },
       { type: 'article', title: 'الدليل الشامل لاستخدام حساس المسافة (Ultrasonic)', url: 'https://randomnerdtutorials.com/complete-guide-for-ultrasonic-sensor-hc-sr04/' },
-      { type: 'course', title: 'مشروع موجه: بناء روبوت متتبع للخط', url: 'https://projecthub.arduino.cc/robocircuits/line-follower-robot-arduino-nano-279f24' }
+      { type: 'course', title: 'مشروع موجه: بناء روبوت متتبع للخط', url: 'https://projecthub.arduino.cc/lee_curiosity/building-a-line-following-robot-using-arduino-017dbb' }
     ], 
     project: 'بناء وبرمجة روبوت متتبع للخط (Line Follower) يتجنب الحواجز.'
   },
@@ -52,7 +52,7 @@ export const roadmapData: Stage[] = [
     description: 'الانتقال للروبوتات الذكية والمستقلة بالكامل باستخدام Raspberry Pi ونظام تشغيل الروبوتات (ROS2).',
     resources: [
       { type: 'course', title: 'المسار الرسمي لتعلم ROS2 (Humble)', url: 'https://docs.ros.org/en/humble/Tutorials.html' },
-      { type: 'video', title: 'دورة بناء روبوت باستخدام ROS2 من الصفر', url: 'https://youtube.com/playlist?list=PLunhqvn6i09OXYQ4GykktbT0PzY1sT9b' },
+      { type: 'video', title: 'دورة أساسيات نظام ROS بالعربي (KroNton)', url: 'http://www.youtube.com/playlist?list=PLxEk9RJLlExVe3T7rCkpZXGQCW_5Wj5Nd' },
       { type: 'article', title: 'كيف تبدأ مع حاسوب Raspberry Pi؟', url: 'https://projects.raspberrypi.org/en/projects/raspberry-pi-getting-started' }
     ], 
     project: 'تحريك وتوجيه روبوت افتراضي (Turtlesim) في بيئة ROS.'
@@ -85,7 +85,7 @@ export const roadmapData: Stage[] = [
     resources: [
       { type: 'video', title: 'دورة هندسة النظم المدمجة (Embedded Systems)', url: 'https://youtube.com/playlist?list=PLPW8O6W-1chwyTzI3BHwvnb2GQyCGlNvd' },
       { type: 'article', title: 'دليل تقنيات البطاريات وإدارة الطاقة في الروبوتات', url: 'https://learn.sparkfun.com/tutorials/battery-technologies' },
-      { type: 'article', title: 'مشاريع متقدمة وإلهام في هندسة الروبوتات (Hackaday)', url: 'https://hackaday.com/category/robotics-hacks/' }
+      { type: 'article', title: 'مشاريع متقدمة وإلهام في هندسة الروبوتات (Hackaday)', url: 'https://hackaday.com/category/robots-hacks/' }
     ], 
     project: 'بناء نظام تحكم متكامل يستهلك طاقة منخفضة جداً ويدعم الاتصال اللاسلكي.'
   }
