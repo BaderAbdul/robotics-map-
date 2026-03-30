@@ -1,8 +1,9 @@
 // src/data/roadmapData.ts
-import { Zap, Cpu, Code, Wrench, Server, Eye, Microchip, Layers } from 'lucide-react';
+import { Zap, Cpu, Code, Wrench, Server, Eye, Microchip, Layers, Box } from 'lucide-react';
 import type { Stage } from '../types';
 
 export const roadmapData: Stage[] = [
+
   // --- المسار الأساسي (للجميع) ---
   {
     id: 1, branch: 'main', title: 'أساسيات الإلكترونيات', icon: Zap, color: 'text-yellow-400', bgColor: 'bg-yellow-400/10', borderColor: 'border-yellow-400', difficulty: 'مبتدئ', difficultyColor: 'bg-green-500/20 text-green-400 border-green-500/30',
@@ -18,7 +19,7 @@ export const roadmapData: Stage[] = [
     id: 2, branch: 'main', title: 'المتحكمات الدقيقة', icon: Cpu, color: 'text-blue-400', bgColor: 'bg-blue-400/10', borderColor: 'border-blue-400', difficulty: 'مبتدئ', difficultyColor: 'bg-green-500/20 text-green-400 border-green-500/30',
     description: 'المتحكم هو "عقل" الروبوت. رحلتك مع Arduino و ESP32 لربط المكونات بالبرمجة.',
     resources: [
-      { type: 'article', title: 'مراجعة: مواد معسكر المتحكمات الدقيقة (فبراير 2026 - GDG Qassim)', url: '#' }, // يمكنك وضع رابط GitHub الخاص بالمعسكر هنا
+      { type: 'article', title: 'مراجعة: مواد معسكر المتحكمات الدقيقة (فبراير 2026 - GDG Qassim)', url: '#' }, 
       { type: 'video', title: 'دورة أردوينو الشاملة للمبتدئين', url: 'https://youtu.be/zJ-LqeX_fLU' },
       { type: 'course', title: 'الدروس الرسمية خطوة بخطوة (Arduino Docs)', url: 'https://docs.arduino.cc/tutorials/' }
     ], 
@@ -39,8 +40,8 @@ export const roadmapData: Stage[] = [
     description: 'كيف يتحرك الروبوت ويشعر بمحيطه؟ استخدام محركات DC والسيرفو وحساسات المسافة.',
     hint: '💡 هنا نقطة التحول! بعد هذه المرحلة اختر تخصصك المفضل للتعمق أكثر.',
     resources: [
-      { type: 'video', title: 'كيف تختار المحرك المناسب لروبوتك؟ (DroneBot)', url: 'https://youtu.be/L22pP2yqQkY' },
-      { type: 'article', title: 'الدليل الشامل لاستخدام حساس المسافة (Ultrasonic)', url: 'https://randomnerdtutorials.com/complete-guide-for-ultrasonic-sensor-hc-sr04/' },
+      { type: 'video', title: 'أنواع المحركات المستخدمة في الروبوتات (عربي)', url: 'https://www.youtube.com/watch?v=IrhiCf_cgKc' },
+      { type: 'article', title: 'الدليل الشامل لاختيار محركات الروبوت (DroneBot)', url: 'https://dronebotworkshop.com/real-robot-003/' },
       { type: 'course', title: 'مشروع موجه: بناء روبوت متتبع للخط', url: 'https://projecthub.arduino.cc/lee_curiosity/building-a-line-following-robot-using-arduino-017dbb' }
     ], 
     project: 'بناء وبرمجة روبوت متتبع للخط (Line Follower) يتجنب الحواجز.'
@@ -80,13 +81,14 @@ export const roadmapData: Stage[] = [
     project: 'تصميم وطباعة لوحة تحكم (Shield) مخصصة لروبوتك.'
   },
   {
-    id: '6b', branch: 'hardware', title: 'هندسة المكونات والنظم المدمجة', icon: Microchip, color: 'text-rose-400', bgColor: 'bg-rose-400/10', borderColor: 'border-rose-400', difficulty: 'خبير', difficultyColor: 'bg-purple-500/20 text-purple-400 border-purple-500/30',
-    description: 'التعمق في بنية المعالجات الدقيقة، بروتوكولات الاتصال المتقدمة (I2C, SPI, CAN)، وتصميم النظم المدمجة.',
+    id: '6b', branch: 'hardware', title: 'تصميم الهياكل والطباعة 3D', icon: Box, color: 'text-rose-400', bgColor: 'bg-rose-400/10', borderColor: 'border-rose-400', difficulty: 'خبير', difficultyColor: 'bg-purple-500/20 text-purple-400 border-purple-500/30',
+    description: 'الروبوت يحتاج إلى جسد صلب! تعلم كيفية تصميم أجزاء الروبوت الميكانيكية (CAD) باستخدام Fusion 360 وطباعتها.',
     resources: [
-      { type: 'video', title: 'دورة هندسة النظم المدمجة (Embedded Systems)', url: 'https://youtube.com/playlist?list=PLPW8O6W-1chwyTzI3BHwvnb2GQyCGlNvd' },
-      { type: 'article', title: 'دليل تقنيات البطاريات وإدارة الطاقة في الروبوتات', url: 'https://learn.sparkfun.com/tutorials/battery-technologies' },
-      { type: 'article', title: 'مشاريع متقدمة وإلهام في هندسة الروبوتات (Hackaday)', url: 'https://hackaday.com/category/robots-hacks/' }
+      { type: 'video', title: 'دورة تصميم الأجزاء الميكانيكية بـ Fusion 360 (عربي)', url: 'https://www.youtube.com/watch?v=Tk9fSG0Aoq4' },
+      { type: 'article', title: 'الدليل الشامل للمبتدئين في الطباعة ثلاثية الأبعاد', url: 'https://all3dp.com/1/3d-printing-for-beginners-all-you-need-to-know/' },
+      { type: 'course', title: 'مكتبة تصميمات الروبوتات الجاهزة (Thingiverse)', url: 'https://www.thingiverse.com/search?q=robot+chassis' }
     ], 
-    project: 'بناء نظام تحكم متكامل يستهلك طاقة منخفضة جداً ويدعم الاتصال اللاسلكي.'
+    project: 'تصميم هيكل (Chassis) مخصص لروبوتك وطباعته لتركيب اللوحة (PCB) والمحركات داخله.'
   }
+
 ];
