@@ -229,6 +229,6 @@ export default function App() {
       {selectedStage && <StageModal stage={selectedStage} onClose={() => setSelectedStage(null)} />}
       <EngineeringWorkbench />
       <Chatbot />
-    </div>
+    </div> 
   );
 }

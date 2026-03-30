@@ -4,7 +4,7 @@ import type { Stage } from '../types';
 
 export const roadmapData: Stage[] = [
 
-  // --- المسار الأساسي (للجميع) --
+  // -- المسار الأساسي (للجميع) --
   {
     id: 1, branch: 'main', title: 'أساسيات الإلكترونيات', icon: Zap, color: 'text-yellow-400', bgColor: 'bg-yellow-400/10', borderColor: 'border-yellow-400', difficulty: 'مبتدئ', difficultyColor: 'bg-green-500/20 text-green-400 border-green-500/30',
     description: 'قبل بناء أي روبوت، يجب أن تفهم كيف تتدفق الكهرباء. تعلم أساسيات الجهد، التيار، المقاومة، وكيفية استخدام لوحة التجارب (Breadboard).',
