@@ -6,6 +6,7 @@ export interface Resource {
 }
  
 // src/types.ts
+// src/types.ts
 
 export interface Stage {
   id: string | number;
@@ -14,9 +15,9 @@ export interface Stage {
   icon: any; 
   bgColor: string;
   color: string;
+  borderColor: string; // <=== تمت إضافة هذا السطر
   difficulty: string;
   difficultyColor: string;
-  // أضفنا المسار الجديد هنا 👇
   branch: 'main' | 'hardware' | 'ai' | 'iot'; 
   resources: {
     title: string;
