@@ -1,6 +1,6 @@
 // src/App.tsx
 import { useState, useEffect } from 'react';
-import { Bot, Map, ExternalLink, Code, CheckCircle2, Circle } from 'lucide-react';
+import { Bot, Map, ExternalLink, Code, CheckCircle2, Circle, ChevronDown, Rocket, CalendarDays, Users } from 'lucide-react';
 import { motion, useScroll, useSpring } from 'framer-motion';
 import type { Stage } from './types';
 import { roadmapData } from './data/roadmapData'; 
@@ -11,8 +11,9 @@ import EventsSection from './components/EventsSection';
 
 export default function App() {
   const [selectedStage, setSelectedStage] = useState<Stage | null>(null);
+  const [isScrolled, setIsScrolled] = useState(false);
   
-  // -- نظام تتبع الإنجاز (Progress Tracker) --
+  // -- نظام تتبع الإنجاز --
   const [completedStages, setCompletedStages] = useState<string[]>(() => {
     const saved = localStorage.getItem('roboCompletedStages');
     return saved ? JSON.parse(saved) : [];
@@ -20,6 +21,9 @@ export default function App() {
 
   useEffect(() => {
     localStorage.setItem('roboCompletedStages', JSON.stringify(completedStages));
+    const handleScroll = () => setIsScrolled(window.scrollY > 50);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, [completedStages]);
 
   const toggleCompletion = (e: React.MouseEvent, id: string | number) => {
@@ -31,15 +35,13 @@ export default function App() {
   };
 
   const progressPercentage = Math.round((completedStages.length / roadmapData.length) * 100);
-
-  // -- مؤشر القراءة (Scroll Progress Bar) --
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
 
   // -- تقسيم المسارات الأربعة --
   const mainStages = roadmapData.filter(s => s.branch === 'main');
   const hwStages = roadmapData.filter(s => s.branch === 'hardware');
-  const iotStages = roadmapData.filter(s => s.branch === 'iot'); // مسارنا الجديد!
+  const iotStages = roadmapData.filter(s => s.branch === 'iot'); 
   const aiStages = roadmapData.filter(s => s.branch === 'ai');
 
   // -- مكون البطاقة المخصص --
@@ -114,97 +116,135 @@ export default function App() {
         style={{ scaleX }}
       />
 
-      <header className="relative pt-16 sm:pt-20 pb-8 sm:pb-12 overflow-hidden border-b border-slate-800/80 bg-slate-950/50 backdrop-blur-sm">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-blue-600/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4"></div>
-        <div className="absolute bottom-0 left-0 w-64 h-64 bg-green-600/10 rounded-full blur-3xl translate-y-1/4 -translate-x-1/4"></div>
+      {/* ============== شريط التنقل (Navbar) ============== */}
+      <nav className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${isScrolled ? 'bg-slate-950/90 backdrop-blur-md border-b border-slate-800 shadow-lg' : 'bg-transparent pt-4'}`}>
+        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+          <div className="flex items-center gap-2.5">
+            <div className="bg-slate-900 p-2 rounded-xl border border-slate-700 shadow-inner shadow-blue-500/20">
+              <Bot className="w-6 h-6 text-blue-400" />
+            </div>
+            <div className="flex flex-col">
+              <span className="font-extrabold text-white leading-none tracking-wide text-lg">GDG <span className="text-transparent bg-clip-text bg-gradient-to-l from-blue-400 to-teal-400">Qassim</span></span>
+              <span className="text-[10px] font-medium text-slate-400 tracking-wider">قسم الروبوتات</span>
+            </div>
+          </div>
+          <div className="hidden md:flex items-center gap-8 text-sm font-bold text-slate-300">
+            <a href="#roadmap" className="hover:text-blue-400 transition-colors flex items-center gap-1.5"><Map className="w-4 h-4"/> الخارطة</a>
+            <a href="#events" className="hover:text-pink-400 transition-colors flex items-center gap-1.5"><CalendarDays className="w-4 h-4"/> الفعاليات</a>
+            <a href="#team" className="hover:text-teal-400 transition-colors flex items-center gap-1.5"><Users className="w-4 h-4"/> الفريق</a>
+          </div>
+        </div>
+      </nav>
+
+      {/* ============== الواجهة الترحيبية (Hero Section) ============== */}
+      <header className="relative pt-32 pb-16 sm:pt-40 sm:pb-24 overflow-hidden border-b border-slate-800/80 bg-slate-950/50 backdrop-blur-sm min-h-[85vh] flex items-center">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-green-600/10 rounded-full blur-3xl translate-y-1/4 -translate-x-1/4"></div>
         
         <div className="container mx-auto px-4 relative z-10 text-center">
-          <div className="inline-flex items-center justify-center p-2.5 sm:p-3 bg-slate-900 border border-slate-700 rounded-2xl mb-4 sm:mb-6 shadow-xl shadow-blue-900/20 relative group cursor-default">
-            <div className="absolute inset-0 bg-blue-500 rounded-2xl blur opacity-20 group-hover:opacity-40 transition-opacity duration-500"></div>
-            <Bot className="w-8 h-8 sm:w-10 sm:h-10 text-blue-400 relative z-10" />
-          </div>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4 bg-gradient-to-l from-blue-400 via-teal-400 to-green-400 bg-clip-text text-transparent drop-shadow-sm leading-tight">
-            خارطة طريق الروبوتات
-          </h1>
+          <motion.div initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} transition={{duration:0.6}} className="inline-flex items-center gap-2 px-4 py-2 bg-blue-500/10 border border-blue-500/20 rounded-full text-sm text-blue-300 mb-8 shadow-inner shadow-blue-500/10">
+            <Rocket className="w-4 h-4" /> المنصة الرسمية لمهندسي المستقبل
+          </motion.div>
           
-          <p className="text-sm sm:text-base md:text-lg text-slate-400 max-w-2xl mx-auto mb-4 sm:mb-6 leading-relaxed px-2">
-            دليلك الشامل من الصفر وحتى احتراف بناء وبرمجة الروبوتات الذكية. مقدم لكم من قسم الروبوتات في مجتمع مطوري جوجل <span className="font-semibold text-white px-1.5 py-0.5 sm:px-2 sm:py-0.5 bg-slate-800 rounded-md border border-slate-700 whitespace-nowrap">GDG Qassim</span>.
-          </p>
-          <div className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-slate-800/80 backdrop-blur-md rounded-full border border-slate-700 text-xs sm:text-sm text-slate-300 shadow-lg mb-6 sm:mb-8">
-            <Map className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-yellow-400 shrink-0" />
-            <span>انقر على أي مرحلة للبدء واستكشاف المصادر</span>
-          </div>
+          <motion.h1 initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} transition={{duration:0.6, delay:0.1}} className="text-4xl sm:text-5xl md:text-7xl font-extrabold mb-6 text-white tracking-tight leading-tight">
+             مرحباً بك في عالم <br className="hidden md:block"/>
+            <span className="text-transparent bg-clip-text bg-gradient-to-l from-blue-400 via-teal-400 to-green-400 drop-shadow-sm"> الروبوتات الذكية </span>
+          </motion.h1>
           
-          <div className="max-w-md mx-auto bg-slate-900/80 border border-slate-700 p-3 sm:p-4 rounded-2xl backdrop-blur-sm shadow-xl mx-2 sm:mx-auto">
-            <div className="flex justify-between text-xs sm:text-sm font-bold text-slate-300 mb-1.5 sm:mb-2">
-              <span>نسبة الإنجاز في المسار:</span>
-              <span className="text-green-400">{progressPercentage}%</span>
+          <motion.p initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} transition={{duration:0.6, delay:0.2}} className="text-base sm:text-lg md:text-xl text-slate-400 max-w-3xl mx-auto mb-10 leading-relaxed">
+            مجتمع مطوري جوجل بجامعة القصيم يضع بين يديك خارطة طريق هندسية متكاملة. من إضاءة مصباحك الأول، وحتى برمجة روبوتات مستقلة تعتمد على الذكاء الاصطناعي وإنترنت الأشياء.
+          </motion.p>
+          
+          <motion.div initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} transition={{duration:0.6, delay:0.3}} className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
+            <a href="#roadmap" className="w-full sm:w-auto px-8 py-4 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-2xl transition-all shadow-[0_0_30px_-5px_rgba(37,99,235,0.4)] hover:shadow-[0_0_40px_-5px_rgba(37,99,235,0.6)] flex items-center justify-center gap-2">
+              <Map className="w-5 h-5"/> ابدأ التعلم الآن
+            </a>
+            <a href="#events" className="w-full sm:w-auto px-8 py-4 bg-slate-800 hover:bg-slate-700 text-white font-bold rounded-2xl border border-slate-700 transition-all flex items-center justify-center gap-2">
+              <CalendarDays className="w-5 h-5"/> استكشف المعسكرات
+            </a>
+          </motion.div>
+
+          {/* شريط الإنجاز العائم */}
+          <motion.div initial={{opacity:0}} animate={{opacity:1}} transition={{duration:1, delay:0.8}} className="max-w-xl mx-auto bg-slate-900/80 border border-slate-700 p-4 sm:p-5 rounded-3xl backdrop-blur-md shadow-2xl relative">
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-green-500/5 rounded-3xl pointer-events-none"></div>
+            <div className="flex justify-between items-end mb-3">
+              <div className="text-right">
+                 <h4 className="font-bold text-white text-sm sm:text-base">تقدمك في الخارطة</h4>
+                 <p className="text-[11px] sm:text-xs text-slate-400 mt-1">أكملت {completedStages.length} من أصل {roadmapData.length} مرحلة</p>
+              </div>
+              <span className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-l from-green-400 to-teal-400">{progressPercentage}%</span>
             </div>
-            <div className="h-2 sm:h-2.5 bg-slate-800 rounded-full overflow-hidden">
+            <div className="h-3 bg-slate-950 rounded-full overflow-hidden border border-slate-800 shadow-inner">
               <motion.div 
-                initial={{ width: 0 }}
-                animate={{ width: `${progressPercentage}%` }}
-                transition={{ duration: 0.8, ease: "easeOut" }}
-                className="h-full bg-gradient-to-l from-green-400 to-teal-500 rounded-full"
-              />
+                initial={{ width: 0 }} animate={{ width: `${progressPercentage}%` }} transition={{ duration: 1, ease: "easeOut" }}
+                className="h-full bg-gradient-to-l from-green-400 via-teal-400 to-blue-500 rounded-full relative"
+              >
+                <div className="absolute inset-0 bg-white/20 w-full animate-[shimmer_2s_infinite]"></div>
+              </motion.div>
             </div>
+          </motion.div>
+          
+          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 animate-bounce text-slate-500 hidden sm:block">
+            <ChevronDown className="w-6 h-6" />
           </div>
         </div>
       </header>
 
-      {/* تم توسيع الـ max-w ليتسع لـ 3 أعمدة بشكل مريح */}
-      <main className="container mx-auto px-4 py-10 sm:py-16 max-w-[1400px] flex-grow overflow-x-hidden">
+      {/* ============== قسم الخارطة (Roadmap) ============== */}
+      <main id="roadmap" className="container mx-auto px-4 py-16 sm:py-24 max-w-[1400px] flex-grow overflow-x-hidden scroll-mt-20">
         
+        <div className="text-center mb-16">
+          <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-white">خارطة الطريق التفاعلية</h2>
+          <p className="text-slate-400 max-w-2xl mx-auto">تدرج في التعلم عبر مسار منهجي. انقر على أي مرحلة لاكتشاف المصادر والمشاريع التطبيقية.</p>
+        </div>
+
         {/* المسار الأساسي */}
-        <div className="relative mb-12 sm:mb-20 max-w-5xl mx-auto">
+        <div className="relative mb-16 sm:mb-24 max-w-5xl mx-auto">
           <div className="absolute top-0 bottom-0 right-[24px] md:right-1/2 w-0.5 bg-gradient-to-b from-blue-500/50 to-purple-500/50 rounded-full translate-x-1/2 md:translate-x-0"></div>
           <div className="space-y-6 sm:space-y-12">
             {mainStages.map((stage, index) => <StageCard key={stage.id} stage={stage} index={index} isMain={true} />)}
           </div>
         </div>
 
-        {/* عقدة التشعب الدالة على التخصصات الثلاثة */}
+        {/* عقدة التشعب */}
         <motion.div 
           initial={{ opacity: 0, scale: 0.8 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }}
-          className="flex flex-col items-center justify-center mb-10 sm:mb-16 text-center"
+          className="flex flex-col items-center justify-center mb-12 sm:mb-20 text-center"
         >
-          <div className="w-1 h-8 sm:h-12 bg-gradient-to-b from-purple-500/50 to-transparent"></div>
-          <div className="px-4 sm:px-6 py-2 sm:py-3 bg-slate-800/80 border border-slate-700 rounded-full text-slate-300 font-bold flex items-center gap-1.5 sm:gap-2 shadow-lg text-xs sm:text-base z-10">
-            <Map className="w-4 h-4 sm:w-5 sm:h-5 text-purple-400 shrink-0" />
-            هنا يتشعب مسارك! اختر تخصصك
+          <div className="w-1 h-12 sm:h-16 bg-gradient-to-b from-purple-500/50 to-transparent"></div>
+          <div className="px-5 sm:px-8 py-3 sm:py-4 bg-slate-800 border-2 border-slate-700 rounded-full text-white font-bold flex items-center gap-2 sm:gap-3 shadow-2xl shadow-purple-900/20 text-sm sm:text-lg z-10">
+            <Map className="w-5 h-5 sm:w-6 sm:h-6 text-purple-400 shrink-0" />
+            تفرع إلى تخصصك الدقيق!
           </div>
-          {/* خطوط متفرعة لـ 3 اتجاهات */}
-          <div className="flex justify-center w-full max-w-2xl mt-3 sm:mt-4 gap-2 sm:gap-4 relative h-8 sm:h-10">
-             <div className="absolute top-0 w-full h-0.5 bg-gradient-to-r from-orange-500/50 via-cyan-500/50 to-teal-500/50 rounded-full"></div>
-             <div className="absolute top-0 left-0 w-0.5 h-full bg-orange-500/50"></div>
-             <div className="absolute top-0 left-1/2 w-0.5 h-full bg-cyan-500/50 -translate-x-1/2"></div>
-             <div className="absolute top-0 right-0 w-0.5 h-full bg-teal-500/50"></div>
+          {/* خطوط التفرع */}
+          <div className="flex justify-center w-full max-w-3xl mt-4 sm:mt-6 gap-2 sm:gap-4 relative h-10 sm:h-12">
+             <div className="absolute top-0 w-full h-1 bg-gradient-to-r from-orange-500/50 via-cyan-500/50 to-teal-500/50 rounded-full"></div>
+             <div className="absolute top-0 left-0 w-1 h-full bg-orange-500/50 rounded-b-full"></div>
+             <div className="absolute top-0 left-1/2 w-1 h-full bg-cyan-500/50 -translate-x-1/2 rounded-b-full"></div>
+             <div className="absolute top-0 right-0 w-1 h-full bg-teal-500/50 rounded-b-full"></div>
           </div>
         </motion.div>
 
-        {/* الـ Grid الجديد لـ 3 أعمدة */}
+        {/* الـ Grid لـ 3 أعمدة (يظهر مسار الـ IoT الآن!) */}
         <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-6 sm:gap-8 relative">
           
-          {/* مسار الهاردوير */}
-          <div className="relative p-4 sm:p-6 rounded-2xl sm:rounded-3xl border border-slate-800/50 bg-slate-900/30">
-            <h3 className="text-lg sm:text-xl font-bold text-center mb-6 text-orange-400 bg-orange-400/10 py-2 sm:py-3 rounded-xl border border-orange-500/20">
+          <div className="relative p-5 sm:p-8 rounded-3xl border border-slate-800 bg-slate-900/40 shadow-xl">
+            <h3 className="text-xl sm:text-2xl font-bold text-center mb-8 text-orange-400 bg-orange-400/10 py-3 sm:py-4 rounded-2xl border border-orange-500/20">
               الهاردوير والدوائر
             </h3>
             <div>{hwStages.map((stage, index) => <StageCard key={stage.id} stage={stage} index={index} />)}</div>
           </div>
 
-          {/* مسار إنترنت الأشياء (IoT) - يظهر الآن! */}
-          <div className="relative p-4 sm:p-6 rounded-2xl sm:rounded-3xl border border-slate-800/50 bg-slate-900/30">
-            <h3 className="text-lg sm:text-xl font-bold text-center mb-6 text-cyan-400 bg-cyan-400/10 py-2 sm:py-3 rounded-xl border border-cyan-500/20">
+          <div className="relative p-5 sm:p-8 rounded-3xl border border-slate-800 bg-slate-900/40 shadow-xl">
+            <h3 className="text-xl sm:text-2xl font-bold text-center mb-8 text-cyan-400 bg-cyan-400/10 py-3 sm:py-4 rounded-2xl border border-cyan-500/20">
               إنترنت الأشياء (IoT)
             </h3>
             <div>{iotStages.map((stage, index) => <StageCard key={stage.id} stage={stage} index={index} />)}</div>
           </div>
 
-          {/* مسار الذكاء الاصطناعي والبرمجيات */}
-          <div className="relative p-4 sm:p-6 rounded-2xl sm:rounded-3xl border border-slate-800/50 bg-slate-900/30 md:col-span-2 lg:col-span-1">
-            <h3 className="text-lg sm:text-xl font-bold text-center mb-6 text-teal-400 bg-teal-400/10 py-2 sm:py-3 rounded-xl border border-teal-500/20">
-              البرمجيات والذكاء الاصطناعي
+          <div className="relative p-5 sm:p-8 rounded-3xl border border-slate-800 bg-slate-900/40 shadow-xl md:col-span-2 lg:col-span-1">
+            <h3 className="text-xl sm:text-2xl font-bold text-center mb-8 text-teal-400 bg-teal-400/10 py-3 sm:py-4 rounded-2xl border border-teal-500/20">
+              البرمجيات والذكاء
             </h3>
             <div>{aiStages.map((stage, index) => <StageCard key={stage.id} stage={stage} index={index} />)}</div>
           </div>
@@ -212,43 +252,56 @@ export default function App() {
         </div>
       </main>
 
-    {/* ============== قسم الفعاليات والمعسكرات ============== */}
-   <div className="container mx-auto px-4 pb-16 max-w-[1400px]">
-      <div className="w-full h-px bg-gradient-to-r from-transparent via-slate-700 to-transparent mb-8"></div>
-      <EventsSection />
-   </div>
+      {/* ============== قسم الفعاليات والمعسكرات ============== */}
+      <section id="events" className="container mx-auto px-4 py-16 sm:py-24 max-w-[1400px] scroll-mt-20 relative">
+         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-px bg-gradient-to-r from-transparent via-slate-700 to-transparent"></div>
+         <EventsSection />
+      </section>
 
-      <footer className="mt-auto border-t border-slate-800/80 bg-slate-900/50 backdrop-blur-md py-6 sm:py-8 pb-24 sm:pb-8">
-        <div className="container mx-auto px-4 text-center">
-          <div className="inline-flex items-center justify-center gap-2 mb-4 sm:mb-5">
-            <span className="w-6 sm:w-8 h-px bg-slate-700"></span>
-            <Code className="w-3 h-3 sm:w-4 sm:h-4 text-slate-500" />
-            <span className="w-6 sm:w-8 h-px bg-slate-700"></span>
+      {/* ============== الفوتر (الفريق والحقوق) ============== */}
+      <footer id="team" className="mt-auto border-t border-slate-800 bg-slate-950 pt-12 pb-24 sm:pb-12 relative overflow-hidden">
+        <div className="absolute bottom-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-blue-900/10 via-slate-950 to-slate-950 pointer-events-none"></div>
+        <div className="container mx-auto px-4 text-center relative z-10">
+          
+          <div className="inline-flex items-center justify-center p-3 bg-slate-900 rounded-2xl border border-slate-800 mb-6 shadow-lg">
+             <Bot className="w-8 h-8 text-slate-400" />
           </div>
-          <div className="flex flex-col md:flex-row items-center justify-center gap-1.5 sm:gap-2 md:gap-6 mb-4">
-            <p className="text-slate-300 text-xs sm:text-sm">
-              برمجة وتطوير الموقع: <span className="text-blue-400 font-bold tracking-wide">بدر الدخيل الله</span> ⚡
-            </p>
-            <span className="hidden md:block w-1.5 h-1.5 rounded-full bg-slate-700"></span>
-            <p className="text-slate-300 text-xs sm:text-sm">
-              إعداد المسار والمحتوى: <span className="text-teal-400 font-bold tracking-wide">فريق الروبوتات</span> 🤖
+
+          <h3 className="text-2xl font-bold text-white mb-2">فريق الروبوتات</h3>
+          <p className="text-slate-400 text-sm mb-8">نعمل معاً لنشر ثقافة الصناعة والابتكار</p>
+
+          <div className="max-w-3xl mx-auto grid sm:grid-cols-2 gap-4 mb-10 text-right">
+            <div className="bg-slate-900/80 p-5 rounded-2xl border border-slate-800 flex flex-col items-center justify-center text-center">
+               <span className="text-xs text-slate-500 font-bold mb-2 tracking-wider">القيادة التنفيذية</span>
+               <p className="text-slate-300 text-sm font-medium leading-loose">
+                  الرئيس: <span className="text-white font-bold">رغد العبيد</span> <br/>
+                  النائب: <span className="text-white font-bold">كيان القفاري</span>
+               </p>
+            </div>
+            <div className="bg-slate-900/80 p-5 rounded-2xl border border-slate-800 flex flex-col items-center justify-center text-center">
+               <span className="text-xs text-slate-500 font-bold mb-2 tracking-wider">أعضاء ومهندسي القسم</span>
+               <p className="text-slate-300 text-sm font-medium leading-loose">
+                  رهف الحربي، شاهر الحربي <br/>
+                  منار النقيدان، مها المطرفي، بدر الدخيل الله
+               </p>
+            </div>
+          </div>
+
+          <div className="w-16 h-1 bg-slate-800 mx-auto rounded-full mb-6"></div>
+          
+          <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-6 mb-4">
+            <p className="text-slate-400 text-sm">
+              تم برمجة وتطوير المنصة بواسطة: <span className="text-blue-400 font-bold tracking-wide">بدر الدخيل الله</span> ⚡
             </p>
           </div>
-          <div className="text-slate-400 text-[10px] sm:text-[11px] leading-relaxed max-w-2xl mx-auto bg-slate-800/30 p-2.5 sm:p-3 rounded-xl border border-slate-700/50 mb-4 sm:mb-6">
-            <p className="mb-1">
-              <span className="font-semibold text-slate-300">قائدة القسم:</span> رغد العبيد &nbsp;|&nbsp; 
-              <span className="font-semibold text-slate-300"> النائب:</span> كيان القفاري
-            </p>
-            <p>
-              <span className="font-semibold text-slate-300">أعضاء القسم:</span> رهف الحربي، شاهر الحربي، منار النقيدان، مها المطرفي، بدر الدخيل الله
-            </p>
-          </div>
-          <p className="text-slate-500 text-[10px] sm:text-xs font-medium">
-            مجتمع مطوري جوجل جامعة القصيم (GDG Qassim) &copy; 2026
+          
+          <p className="text-slate-500 text-xs font-medium">
+            جميع الحقوق محفوظة - مجتمع مطوري جوجل بجامعة القصيم (GDG Qassim) &copy; 2026
           </p>
         </div>
       </footer>
 
+      {/* المكونات العائمة (Modals & Tools) */}
       {selectedStage && <StageModal stage={selectedStage} onClose={() => setSelectedStage(null)} />}
       <EngineeringWorkbench />
       <Chatbot />
