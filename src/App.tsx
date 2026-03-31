@@ -1,6 +1,6 @@
 // src/App.tsx
 import { useState, useEffect } from 'react';
-import { Bot, Map, ExternalLink, CheckCircle2, Circle, ChevronDown, Rocket, CalendarDays, Users } from 'lucide-react';
+import { Bot, Map, ExternalLink, CheckCircle2, Circle, ChevronDown, Rocket, CalendarDays, Users, Linkedin } from 'lucide-react';
 import { motion, useScroll, useSpring } from 'framer-motion';
 import type { Stage } from './types';
 import { roadmapData } from './data/roadmapData'; 
@@ -143,12 +143,12 @@ export default function App() {
         
         <div className="container mx-auto px-4 relative z-10 text-center">
           <motion.div initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} transition={{duration:0.6}} className="inline-flex items-center gap-2 px-4 py-2 bg-blue-500/10 border border-blue-500/20 rounded-full text-sm text-blue-300 mb-8 shadow-inner shadow-blue-500/10">
-            <Rocket className="w-4 h-4" /> المنصة الرسمية لمهندسي المستقبل
+            <Rocket className="w-4 h-4" /> المنصة الرسمية لمهندسي الروبوتات
           </motion.div>
           
           <motion.h1 initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} transition={{duration:0.6, delay:0.1}} className="text-4xl sm:text-5xl md:text-7xl font-extrabold mb-6 text-white tracking-tight leading-tight">
              مرحباً بك في عالم <br className="hidden md:block"/>
-            <span className="text-transparent bg-clip-text bg-gradient-to-l from-blue-400 via-teal-400 to-green-400 drop-shadow-sm"> الروبوتات الذكية </span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-l from-blue-400 via-teal-400 to-green-400 drop-shadow-sm"> الروبوتات </span>
           </motion.h1>
           
           <motion.p initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} transition={{duration:0.6, delay:0.2}} className="text-base sm:text-lg md:text-xl text-slate-400 max-w-3xl mx-auto mb-10 leading-relaxed">
@@ -272,17 +272,17 @@ export default function App() {
 
           <div className="max-w-3xl mx-auto grid sm:grid-cols-2 gap-4 mb-10 text-right">
             <div className="bg-slate-900/80 p-5 rounded-2xl border border-slate-800 flex flex-col items-center justify-center text-center">
-               <span className="text-xs text-slate-500 font-bold mb-2 tracking-wider">القيادة التنفيذية</span>
+               <span className="text-xs text-slate-500 font-bold mb-2 tracking-wider">ادارة القسم</span>
                <p className="text-slate-300 text-sm font-medium leading-loose">
-                  الرئيس: <span className="text-white font-bold">رغد العبيد</span> <br/>
-                  النائب: <span className="text-white font-bold">كيان القفاري</span>
+                  الرئيس: <span className="text-white font-bold">كيان القفاري</span> <br/>
+                  النائب: <span className="text-white font-bold">منار النقيدان</span>
                </p>
             </div>
             <div className="bg-slate-900/80 p-5 rounded-2xl border border-slate-800 flex flex-col items-center justify-center text-center">
-               <span className="text-xs text-slate-500 font-bold mb-2 tracking-wider">أعضاء ومهندسي القسم</span>
+               <span className="text-xs text-slate-500 font-bold mb-2 tracking-wider">أعضاء القسم</span>
                <p className="text-slate-300 text-sm font-medium leading-loose">
                   رهف الحربي، شاهر الحربي <br/>
-                  منار النقيدان، مها المطرفي، بدر الدخيل الله
+                   مها المطرفي، بدر الدخيل الله
                </p>
             </div>
           </div>
@@ -290,9 +290,18 @@ export default function App() {
           <div className="w-16 h-1 bg-slate-800 mx-auto rounded-full mb-6"></div>
           
           <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-6 mb-4">
-            <p className="text-slate-400 text-sm">
-              تم برمجة وتطوير المنصة بواسطة: <span className="text-blue-400 font-bold tracking-wide">بدر الدخيل الله</span> ⚡
-            </p>
+          <p className="text-slate-400 text-sm flex items-center justify-center gap-2">
+  تم برمجة وتطوير المنصة بواسطة: 
+  <a 
+    href="https://www.linkedin.com/in/bader-aldkhilallah" 
+    target="_blank" 
+    rel="noopener noreferrer"
+    className="text-blue-400 font-bold tracking-wide hover:text-blue-300 transition-colors flex items-center gap-1 group"
+  >
+    بدر الدخيل الله
+    <Linkedin className="w-4 h-4 group-hover:scale-110 transition-transform" />
+  </a> ⚡
+</p> 
           </div>
           
           <p className="text-slate-500 text-xs font-medium">
