@@ -66,12 +66,18 @@ export default function InteractivePinout() {
         className="relative flex items-center cursor-crosshair group z-20"
         onMouseEnter={() => setHoveredPin(pin.id)} 
         onMouseLeave={() => setHoveredPin(null)}
+        onClick={() => setHoveredPin(pin.id)} // دعم النقر الصريح لمستخدمي الجوال
       >
-        <div className={`w-3 h-3 sm:w-3.5 sm:h-3.5 bg-[#1e293b] border-[0.5px] border-slate-700/50 flex items-center justify-center transition-all ${isHovered ? 'scale-125 z-30' : ''}`}>
+        {/* خدعة الـ UX للجوال: زيادة مساحة النقر الشفافة لتسهيل الضغط بالإصبع */}
+        <div className="absolute inset-[-6px] sm:inset-[-4px] bg-transparent z-10"></div>
+
+        {/* المسمار الفعلي */}
+        <div className={`relative w-3 h-3 sm:w-3.5 sm:h-3.5 bg-[#1e293b] border-[0.5px] border-slate-700/50 flex items-center justify-center transition-all ${isHovered ? 'scale-125 z-40' : 'z-20'}`}>
            <div className={`w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full transition-all duration-300 ${isHovered ? `bg-white ${pin.glow}` : 'bg-slate-900'}`}></div>
         </div>
 
-        <span className={`absolute ${isLeft ? 'left-full ml-1.5' : 'right-full mr-1.5'} text-[7px] sm:text-[8px] font-bold font-mono transition-colors whitespace-nowrap ${isHovered ? pin.textClass : 'text-slate-300/80'}`}>
+        {/* تم تفتيح لون النص (text-slate-200) ليكون مقروءاً بوضوح دائم، مع حمايته من النقرات الخاطئة (pointer-events-none) */}
+        <span className={`absolute ${isLeft ? 'left-full ml-1.5' : 'right-full mr-1.5'} text-[7px] sm:text-[8px] font-bold font-mono transition-colors whitespace-nowrap pointer-events-none ${isHovered ? pin.textClass : 'text-slate-200'}`}>
           {pin.name}
         </span>
       </div>
@@ -81,17 +87,13 @@ export default function InteractivePinout() {
   return (
     <div className="flex flex-col items-center w-full">
       
-      {/* الحاوية الذكية (Smart Container):
-        هنا السحر! الطول (h) يتغير حسب الشاشة ليستوعب اللوحة المصغرة،
-        مما يمنع اللوحة من التداخل مع النصوص السفلية أو الخروج عن الصندوق.
-      */}
+      {/* الحاوية الذكية */}
       <div className="relative w-full h-[280px] sm:h-[360px] md:h-[440px] flex justify-center mt-2 sm:mt-4">
         
-        {/* اللوحة المصغرة (Scaled Board) بموضع Absolute داخل الحاوية */}
+        {/* اللوحة المصغرة */}
         <div className="absolute top-0 transform scale-[0.60] sm:scale-[0.80] md:scale-100 origin-top transition-transform duration-300">
           <div className="relative w-[300px] h-[420px] bg-[#008184] rounded-xl border border-[#006a6c] shadow-2xl">
             
-            {/* تفاصيل اللوحة */}
             <div className="absolute top-[180px] right-[100px] -rotate-90 text-[18px] font-extrabold text-white/80 tracking-widest flex items-center gap-2 pointer-events-none">
               Arduino <span className="w-6 h-6 rounded-full border-2 border-white flex items-center justify-center text-[10px]">+ -</span> UNO
             </div>
@@ -104,24 +106,24 @@ export default function InteractivePinout() {
                <div className="w-6 h-6 bg-black rounded-full border border-slate-700"></div>
             </div>
 
-            <div className="absolute top-[80px] left-[20px] flex flex-col gap-2">
+            <div className="absolute top-[80px] left-[20px] flex flex-col gap-2 pointer-events-none">
                <div className="w-8 h-8 rounded-full bg-slate-300 border-[3px] border-slate-900 shadow-sm flex items-center justify-center"><div className="w-6 h-6 rounded-full bg-slate-200"></div></div>
                <div className="w-8 h-8 rounded-full bg-slate-300 border-[3px] border-slate-900 shadow-sm flex items-center justify-center"><div className="w-6 h-6 rounded-full bg-slate-200"></div></div>
             </div>
 
-            <div className="w-8 h-8 bg-slate-200 border border-slate-300 absolute top-[10px] right-[10px] flex items-center justify-center shadow-sm">
+            <div className="w-8 h-8 bg-slate-200 border border-slate-300 absolute top-[10px] right-[10px] flex items-center justify-center shadow-sm pointer-events-none">
                <div className="w-4 h-4 bg-red-700 rounded-full shadow-inner"></div>
                <span className="absolute -left-6 rotate-90 text-[6px] text-white font-bold">RESET</span>
             </div>
 
-            <div className="w-[30px] h-[160px] bg-slate-900 rounded-sm absolute bottom-[60px] left-[70px] flex items-center justify-center shadow-md">
+            <div className="w-[30px] h-[160px] bg-slate-900 rounded-sm absolute bottom-[60px] left-[70px] flex items-center justify-center shadow-md pointer-events-none">
                <span className="text-[6px] font-mono text-slate-500 -rotate-90">ATMEGA328P</span>
             </div>
 
-            <div className="absolute top-[100px] right-[40px] w-6 h-10 bg-slate-900 rounded-sm grid grid-cols-2 gap-[2px] p-1">
+            <div className="absolute top-[100px] right-[40px] w-6 h-10 bg-slate-900 rounded-sm grid grid-cols-2 gap-[2px] p-1 pointer-events-none">
                {[...Array(6)].map((_, i) => <div key={i} className="w-1.5 h-1.5 bg-slate-400 rounded-full"></div>)}
             </div>
-            <div className="absolute bottom-[20px] right-[120px] w-10 h-6 bg-slate-900 rounded-sm grid grid-rows-2 grid-cols-3 gap-[2px] p-1">
+            <div className="absolute bottom-[20px] right-[120px] w-10 h-6 bg-slate-900 rounded-sm grid grid-rows-2 grid-cols-3 gap-[2px] p-1 pointer-events-none">
                {[...Array(6)].map((_, i) => <div key={i} className="w-1.5 h-1.5 bg-slate-400 rounded-full"></div>)}
             </div>
 
@@ -130,12 +132,12 @@ export default function InteractivePinout() {
               <div className="flex flex-col gap-[1px] bg-slate-950 p-[2px] rounded-sm shadow-md">
                 {pins.filter(p => p.group === 'power').map(pin => <PinSocket key={pin.id} pin={pin} />)}
               </div>
-              <span className="text-[8px] text-white font-bold my-1 rotate-90 ml-6">POWER</span>
+              <span className="text-[8px] text-white font-bold my-1 rotate-90 ml-6 pointer-events-none">POWER</span>
               
               <div className="flex flex-col gap-[1px] bg-slate-950 p-[2px] rounded-sm shadow-md mt-2">
                 {pins.filter(p => p.group === 'analog').map(pin => <PinSocket key={pin.id} pin={pin} />)}
               </div>
-              <span className="text-[8px] text-white font-bold mt-2 rotate-90 ml-6">ANALOG IN</span>
+              <span className="text-[8px] text-white font-bold mt-2 rotate-90 ml-6 pointer-events-none">ANALOG IN</span>
             </div>
 
             <div className="absolute top-[120px] right-[10px] flex flex-col items-center z-30">
@@ -151,7 +153,7 @@ export default function InteractivePinout() {
         </div>
       </div>
 
-      {/* بطاقة الشرح - تم ضبطها لتكون متجاوبة (Responsive) */}
+      {/* بطاقة الشرح */}
       <div className="w-full min-h-[90px] sm:min-h-[110px] bg-[#0b1120] border border-slate-800 rounded-xl sm:rounded-2xl p-3 sm:p-5 flex items-center shadow-xl mt-2 mb-2 z-40 shrink-0">
         <AnimatePresence mode="wait">
           {activePinData ? (
@@ -168,15 +170,15 @@ export default function InteractivePinout() {
                   {activePinData.desc}
                 </p>
               </div>
-              {/* أيقونة البطاقة مع shrink-0 لكي لا تنضغط في الشاشات الصغيرة */}
               <div className={`p-2.5 sm:p-4 rounded-xl bg-slate-900 border border-slate-700/50 shadow-inner shrink-0 ${activePinData.glow}`}>
                 <activePinData.icon className={`w-5 h-5 sm:w-8 sm:h-8 ${activePinData.textClass}`} />
               </div>
             </motion.div>
           ) : (
              <motion.div key="empty" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="flex w-full items-center justify-center">
+                {/* تم تعديل النص ليناسب أجهزة الجوال (Touch) */}
                 <p className="text-[11px] sm:text-sm text-slate-400 font-medium text-center">
-                  مرر الماوس على الأقطاب في اللوحة لمعرفة وظيفتها.
+                  انقر أو مرر الماوس على الأقطاب لمعرفة وظيفتها.
                 </p>
              </motion.div>
           )}
