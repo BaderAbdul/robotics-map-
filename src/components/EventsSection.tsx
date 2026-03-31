@@ -17,29 +17,29 @@ interface EventInfo {
 const eventsData: EventInfo[] = [
   {
     id: "evt-01",
-    title: "معسكر المتحكمات الدقيقة الشامل",
+    title: "معسكر المتحكمات الدقيقة",
     date: "فبراير 2026",
-    duration: "أسبوعان",
+    duration: "3 أيام",
     level: "مبتدئ",
     status: "completed",
     description: "معسكر تدريبي مكثف قدمه القسم لطلاب الجامعة، تناول أساسيات الإلكترونيات، برمجة الأردوينو، والتعامل مع الحساسات الأساسية والمحركات.",
     prerequisites: ["شغف التعلم", "لابتوب شخصي"],
     materials: [
-      { name: "عرض التقديمي (PDF)", url: "#", icon: FileText },
-      { name: "أكواد المشاريع (GitHub)", url: "#", icon: Github },
+      { name: "عرض التقديمي (PDF)", url: "https://canva.link/co3p3azerhj6wcz", icon: FileText },
+     
     ]
   },
   {
     id: "evt-02",
-    title: "تحدي روبوتات تتبع المسار",
-    date: "15 أبريل 2026",
-    duration: "يوم واحد",
+    title: "معسكر إنترنت الأشياء (IoT)",
+    date: "12-14 أبريل 2026",
+    duration: "3 أيام",
     level: "متوسط",
     status: "upcoming",
-    description: "تحدي تنافسي بين فرق الجامعة لبناء أسرع روبوت متتبع للخط (Line Follower). سيتم تقييم التصميم، سلاسة الحركة باستخدام PID، والسرعة.",
-    prerequisites: ["اجتياز المرحلة الرابعة من الخارطة", "تكوين فريق من 3 أشخاص"],
+    description: "انتقل بروبوتك إلى السحابة! سنتعلم في هذا المعسكر كيفية ربط لوحات ESP32 بالإنترنت، وبناء لوحات تحكم (Dashboards) تفاعلية للتحكم بالروبوت عن بُعد عبر بروتوكول MQTT و منصة Blynk.",
+    prerequisites: ["أساسيات الأردوينو", "لابتوب"],
     materials: [
-      { name: "دليل وشروط المسابقة", url: "#", icon: DownloadCloud }
+      { name: "رابط التسجيل (قريباً)", url: "#", icon: CalendarDays }
     ]
   }
 ];
