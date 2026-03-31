@@ -7,6 +7,7 @@ import { roadmapData } from './data/roadmapData';
 import Chatbot from './components/Chatbot';
 import StageModal from './components/StageModal';
 import EngineeringWorkbench from './components/EngineeringWorkbench';
+import EventsSection from './components/EventsSection';
 
 export default function App() {
   const [selectedStage, setSelectedStage] = useState<Stage | null>(null);
@@ -210,6 +211,12 @@ export default function App() {
 
         </div>
       </main>
+
+    {/* ============== قسم الفعاليات والمعسكرات ============== */}
+   <div className="container mx-auto px-4 pb-16 max-w-[1400px]">
+      <div className="w-full h-px bg-gradient-to-r from-transparent via-slate-700 to-transparent mb-8"></div>
+      <EventsSection />
+   </div>
 
       <footer className="mt-auto border-t border-slate-800/80 bg-slate-900/50 backdrop-blur-md py-6 sm:py-8 pb-24 sm:pb-8">
         <div className="container mx-auto px-4 text-center">
