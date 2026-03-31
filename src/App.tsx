@@ -115,23 +115,30 @@ export default function App() {
         className="fixed top-0 right-0 left-0 h-1.5 bg-gradient-to-r from-blue-500 via-teal-400 to-green-500 z-50 origin-right"
         style={{ scaleX }}
       />
-
-      {/* ============== شريط التنقل (Navbar) ============== */}
-      <nav className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${isScrolled ? 'bg-slate-950/90 backdrop-blur-md border-b border-slate-800 shadow-lg' : 'bg-transparent pt-4'}`}>
-        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2.5">
-            <div className="bg-slate-900 p-2 rounded-xl border border-slate-700 shadow-inner shadow-blue-500/20">
-              <Bot className="w-6 h-6 text-blue-400" />
+   {/* ============== شريط التنقل (Navbar) ============== */}
+    <nav className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${isScrolled ? 'bg-slate-950/90 backdrop-blur-md border-b border-slate-800 shadow-lg' : 'bg-transparent pt-3 sm:pt-4'}`}>
+        <div className="container mx-auto px-3 sm:px-4 h-16 flex items-center justify-between">
+          <div className="flex items-center gap-2 sm:gap-2.5">
+            <div className="bg-slate-900 p-1.5 sm:p-2 rounded-xl border border-slate-700 shadow-inner shadow-blue-500/20">
+              <Bot className="w-5 h-5 sm:w-6 sm:h-6 text-blue-400" />
             </div>
             <div className="flex flex-col">
-              <span className="font-extrabold text-white leading-none tracking-wide text-lg">GDG <span className="text-transparent bg-clip-text bg-gradient-to-l from-blue-400 to-teal-400">Qassim</span></span>
-              <span className="text-[10px] font-medium text-slate-400 tracking-wider">قسم الروبوتات</span>
+              <span className="font-extrabold text-white leading-none tracking-wide text-sm sm:text-lg">GDG <span className="text-transparent bg-clip-text bg-gradient-to-l from-blue-400 to-teal-400">Qassim</span></span>
+              <span className="text-[8px] sm:text-[10px] font-medium text-slate-400 tracking-wider">قسم الروبوتات</span>
             </div>
           </div>
-          <div className="hidden md:flex items-center gap-8 text-sm font-bold text-slate-300">
-            <a href="#roadmap" className="hover:text-blue-400 transition-colors flex items-center gap-1.5"><Map className="w-4 h-4"/> الخارطة</a>
-            <a href="#events" className="hover:text-pink-400 transition-colors flex items-center gap-1.5"><CalendarDays className="w-4 h-4"/> الفعاليات</a>
-            <a href="#team" className="hover:text-teal-400 transition-colors flex items-center gap-1.5"><Users className="w-4 h-4"/> الفريق</a>
+          
+          {/* إزالة الـ hidden وتعديل الأحجام لتناسب الجوال والكمبيوتر */}
+          <div className="flex items-center gap-3 sm:gap-8 text-[11px] sm:text-sm font-bold text-slate-300">
+            <a href="#roadmap" className="hover:text-blue-400 transition-colors flex items-center gap-1 sm:gap-1.5">
+              <Map className="w-3.5 h-3.5 sm:w-4 sm:h-4"/> الخارطة
+            </a>
+            <a href="#events" className="hover:text-pink-400 transition-colors flex items-center gap-1 sm:gap-1.5">
+              <CalendarDays className="w-3.5 h-3.5 sm:w-4 sm:h-4"/> الفعاليات
+            </a>
+            <a href="#team" className="hover:text-teal-400 transition-colors flex items-center gap-1 sm:gap-1.5">
+              <Users className="w-3.5 h-3.5 sm:w-4 sm:h-4"/> الفريق
+            </a>
           </div>
         </div>
       </nav>
