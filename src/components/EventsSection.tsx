@@ -1,6 +1,6 @@
 // src/components/EventsSection.tsx
-import { Calendar, Clock, FileText, Users, Github, DownloadCloud, CheckCircle2, AlertCircle } from 'lucide-react';
 
+import { Calendar, Clock, FileText, Users, Github, DownloadCloud, CheckCircle2, AlertCircle, CalendarDays } from 'lucide-react';
 interface EventInfo {
   id: string;
   title: string;
