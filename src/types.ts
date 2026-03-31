@@ -5,20 +5,26 @@ export interface Resource {
   url: string;
 }
  
+// src/types.ts
+
 export interface Stage {
-  id: number | string;
+  id: string | number;
   title: string;
+  description: string;
   icon: any; 
-  color: string;
   bgColor: string;
-  borderColor: string;
+  color: string;
   difficulty: string;
   difficultyColor: string;
-  description: string;
-  resources: Resource[];
+  // أضفنا المسار الجديد هنا 👇
+  branch: 'main' | 'hardware' | 'ai' | 'iot'; 
+  resources: {
+    title: string;
+    url: string;
+    type: 'video' | 'article' | 'course';
+  }[];
   project: string;
   hint?: string;
-  branch?: 'main' | 'ai' | 'hardware'; // خاصية التشعب الجديدة
 }
 
 export interface ChatMessage {

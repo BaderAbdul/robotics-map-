@@ -1,5 +1,5 @@
 // src/data/roadmapData.ts
-import { Zap, Cpu, Code, Wrench, Server, Eye, Layers, Box, Sliders, GitBranch, MonitorPlay, Wifi, Cloud, SmartphoneNfc } from 'lucide-react';
+import { Zap, Cpu, Code, Wrench, Server, Eye, Layers, Box, Sliders, GitBranch, Wifi, Cloud, SmartphoneNfc } from 'lucide-react';
 import type { Stage } from '../types';
 
 export const roadmapData: Stage[] = [
