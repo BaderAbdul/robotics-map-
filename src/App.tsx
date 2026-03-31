@@ -300,7 +300,7 @@ export default function App() {
           <p className="text-slate-400 text-sm flex items-center justify-center gap-2">
   تم برمجة وتطوير المنصة بواسطة: 
   <a 
-    href="https://www.linkedin.com/in/bader-aldkhilallah" 
+    href="https://www.linkedin.com/in/bader-aldkhilallah-209650224" 
     target="_blank" 
     rel="noopener noreferrer"
     className="text-blue-400 font-bold tracking-wide hover:text-blue-300 transition-colors flex items-center gap-1 group"
