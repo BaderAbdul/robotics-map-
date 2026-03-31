@@ -1,3 +1,4 @@
+// src/App.tsx
 import { useState, useEffect } from 'react';
 import { Bot, Map, ExternalLink, Code, CheckCircle2, Circle } from 'lucide-react';
 import { motion, useScroll, useSpring } from 'framer-motion';
@@ -34,10 +35,11 @@ export default function App() {
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
 
-  // -- تقسيم المسارات --
+  // -- تقسيم المسارات الأربعة --
   const mainStages = roadmapData.filter(s => s.branch === 'main');
-  const aiStages = roadmapData.filter(s => s.branch === 'ai');
   const hwStages = roadmapData.filter(s => s.branch === 'hardware');
+  const iotStages = roadmapData.filter(s => s.branch === 'iot'); // مسارنا الجديد!
+  const aiStages = roadmapData.filter(s => s.branch === 'ai');
 
   // -- مكون البطاقة المخصص --
   const StageCard = ({ stage, index, isMain = false }: { stage: Stage, index: number, isMain?: boolean }) => {
@@ -54,9 +56,7 @@ export default function App() {
         transition={{ duration: 0.5, delay: index * 0.1 }}
         className={`relative flex items-center group ${isMain ? 'md:justify-between' : 'w-full mb-8'}`}
       >
-        {/* دوائر الخط الزمني (Timeline Dots) */}
         {isMain && (
-          // تم ضبط الموضع ليكون متناسقاً في الجوال والكمبيوتر
           <div className="absolute right-[24px] md:left-1/2 md:right-auto md:-translate-x-1/2 w-6 h-6 rounded-full bg-slate-950 border-4 border-slate-700 group-hover:border-blue-500 group-hover:scale-125 transition-all duration-300 z-10 shadow-lg shadow-slate-900 translate-x-1/2 md:translate-x-0">
              {isCompleted && <div className="absolute inset-0 bg-green-500 rounded-full blur-sm"></div>}
           </div>
@@ -65,13 +65,11 @@ export default function App() {
         <div className={`w-full ${isMain ? `pl-12 md:pl-0 pr-16 md:pr-0 md:w-[45%] ${isEven ? 'md:text-left md:mr-auto' : 'md:text-right md:ml-auto'}` : ''}`}>
           <button 
             onClick={() => setSelectedStage(stage)}
-            // تقليل الحواف الداخلية في الجوال لترك مساحة للنصوص
             className={`w-full text-right p-4 sm:p-6 rounded-2xl border backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl group relative overflow-hidden
               ${isCompleted 
                 ? 'bg-green-900/10 border-green-500/50 hover:bg-green-900/20 hover:border-green-400' 
-                : 'bg-slate-900/80 border-slate-800/80 hover:bg-slate-800 hover:border-slate-700'}`}
+                : 'bg-slate-900/80 hover:bg-slate-800'} ${stage.borderColor ? `border-${stage.borderColor.split('-')[1]}-500/30` : 'border-slate-800/80'}`}
           >
-            {/* زر تحديد الإنجاز (دائرة الصح) - ضبط المكان ليناسب الجوال */}
             <div 
               onClick={(e) => toggleCompletion(e, stage.id)}
               className="absolute top-4 left-4 sm:top-6 sm:left-6 z-20 cursor-pointer text-slate-500 hover:text-green-400 transition-colors"
@@ -96,7 +94,6 @@ export default function App() {
             <h3 className={`text-lg sm:text-xl font-bold mb-1.5 sm:mb-2 transition-colors pr-2 sm:pr-0 ${isCompleted ? 'text-green-300' : 'text-white group-hover:text-blue-400'}`}>
               {stage.title}
             </h3>
-            {/* تم تصغير النص قليلاً في الجوال ليتسع داخل الكارت */}
             <p className="text-slate-400 text-xs sm:text-sm line-clamp-2 mb-3 sm:mb-4 leading-relaxed pr-2 sm:pr-0">{stage.description}</p>
             
             <div className={`flex items-center text-xs sm:text-sm font-medium pr-2 sm:pr-0 ${isCompleted ? 'text-green-400' : 'text-blue-400'}`}>
@@ -154,44 +151,63 @@ export default function App() {
         </div>
       </header>
 
-      <main className="container mx-auto px-4 py-10 sm:py-16 max-w-5xl flex-grow overflow-x-hidden">
-        <div className="relative mb-12 sm:mb-20">
-          {/* تعديل مكان الخط الزمني في الجوال ليكون متناسقاً مع الدوائر */}
+      {/* تم توسيع الـ max-w ليتسع لـ 3 أعمدة بشكل مريح */}
+      <main className="container mx-auto px-4 py-10 sm:py-16 max-w-[1400px] flex-grow overflow-x-hidden">
+        
+        {/* المسار الأساسي */}
+        <div className="relative mb-12 sm:mb-20 max-w-5xl mx-auto">
           <div className="absolute top-0 bottom-0 right-[24px] md:right-1/2 w-0.5 bg-gradient-to-b from-blue-500/50 to-purple-500/50 rounded-full translate-x-1/2 md:translate-x-0"></div>
           <div className="space-y-6 sm:space-y-12">
             {mainStages.map((stage, index) => <StageCard key={stage.id} stage={stage} index={index} isMain={true} />)}
           </div>
         </div>
 
+        {/* عقدة التشعب الدالة على التخصصات الثلاثة */}
         <motion.div 
           initial={{ opacity: 0, scale: 0.8 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }}
           className="flex flex-col items-center justify-center mb-10 sm:mb-16 text-center"
         >
           <div className="w-1 h-8 sm:h-12 bg-gradient-to-b from-purple-500/50 to-transparent"></div>
-          <div className="px-4 sm:px-6 py-2 sm:py-3 bg-slate-800/80 border border-slate-700 rounded-full text-slate-300 font-bold flex items-center gap-1.5 sm:gap-2 shadow-lg text-xs sm:text-base">
+          <div className="px-4 sm:px-6 py-2 sm:py-3 bg-slate-800/80 border border-slate-700 rounded-full text-slate-300 font-bold flex items-center gap-1.5 sm:gap-2 shadow-lg text-xs sm:text-base z-10">
             <Map className="w-4 h-4 sm:w-5 sm:h-5 text-purple-400 shrink-0" />
             هنا يتشعب مسارك! اختر تخصصك
           </div>
-          <div className="flex justify-center w-full max-w-xs sm:max-w-md mt-3 sm:mt-4 gap-2 sm:gap-4">
-            <div className="w-1/2 h-0.5 bg-gradient-to-l from-transparent to-teal-500/50 mt-2 sm:mt-4 rounded-full"></div>
-            <div className="w-1/2 h-0.5 bg-gradient-to-r from-transparent to-orange-500/50 mt-2 sm:mt-4 rounded-full"></div>
+          {/* خطوط متفرعة لـ 3 اتجاهات */}
+          <div className="flex justify-center w-full max-w-2xl mt-3 sm:mt-4 gap-2 sm:gap-4 relative h-8 sm:h-10">
+             <div className="absolute top-0 w-full h-0.5 bg-gradient-to-r from-orange-500/50 via-cyan-500/50 to-teal-500/50 rounded-full"></div>
+             <div className="absolute top-0 left-0 w-0.5 h-full bg-orange-500/50"></div>
+             <div className="absolute top-0 left-1/2 w-0.5 h-full bg-cyan-500/50 -translate-x-1/2"></div>
+             <div className="absolute top-0 right-0 w-0.5 h-full bg-teal-500/50"></div>
           </div>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-6 sm:gap-8 relative">
+        {/* الـ Grid الجديد لـ 3 أعمدة */}
+        <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-6 sm:gap-8 relative">
+          
+          {/* مسار الهاردوير */}
           <div className="relative p-4 sm:p-6 rounded-2xl sm:rounded-3xl border border-slate-800/50 bg-slate-900/30">
-            <h3 className="text-lg sm:text-2xl font-bold text-center mb-6 sm:mb-8 text-orange-400 bg-orange-400/10 py-2 sm:py-3 rounded-xl border border-orange-500/20">
-              مسار الدوائر والمكونات (Hardware)
+            <h3 className="text-lg sm:text-xl font-bold text-center mb-6 text-orange-400 bg-orange-400/10 py-2 sm:py-3 rounded-xl border border-orange-500/20">
+              الهاردوير والدوائر
             </h3>
             <div>{hwStages.map((stage, index) => <StageCard key={stage.id} stage={stage} index={index} />)}</div>
           </div>
 
-          <div className="relative p-4 sm:p-6 rounded-2xl sm:rounded-3xl border border-slate-800/50 bg-slate-900/30 mt-4 md:mt-0">
-            <h3 className="text-lg sm:text-2xl font-bold text-center mb-6 sm:mb-8 text-teal-400 bg-teal-400/10 py-2 sm:py-3 rounded-xl border border-teal-500/20">
-              مسار الذكاء الاصطناعي والبرمجيات
+          {/* مسار إنترنت الأشياء (IoT) - يظهر الآن! */}
+          <div className="relative p-4 sm:p-6 rounded-2xl sm:rounded-3xl border border-slate-800/50 bg-slate-900/30">
+            <h3 className="text-lg sm:text-xl font-bold text-center mb-6 text-cyan-400 bg-cyan-400/10 py-2 sm:py-3 rounded-xl border border-cyan-500/20">
+              إنترنت الأشياء (IoT)
+            </h3>
+            <div>{iotStages.map((stage, index) => <StageCard key={stage.id} stage={stage} index={index} />)}</div>
+          </div>
+
+          {/* مسار الذكاء الاصطناعي والبرمجيات */}
+          <div className="relative p-4 sm:p-6 rounded-2xl sm:rounded-3xl border border-slate-800/50 bg-slate-900/30 md:col-span-2 lg:col-span-1">
+            <h3 className="text-lg sm:text-xl font-bold text-center mb-6 text-teal-400 bg-teal-400/10 py-2 sm:py-3 rounded-xl border border-teal-500/20">
+              البرمجيات والذكاء الاصطناعي
             </h3>
             <div>{aiStages.map((stage, index) => <StageCard key={stage.id} stage={stage} index={index} />)}</div>
           </div>
+
         </div>
       </main>
 
@@ -229,6 +245,6 @@ export default function App() {
       {selectedStage && <StageModal stage={selectedStage} onClose={() => setSelectedStage(null)} />}
       <EngineeringWorkbench />
       <Chatbot />
-    </div> 
+    </div>
   );
 }
